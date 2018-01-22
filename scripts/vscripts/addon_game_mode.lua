@@ -9,9 +9,10 @@ if Brewlit == nil then
 	_G.Brewlit = class ({})
 end
 
-require('brewlit/brewlit');
+require('main')
 require('brewlit/setup')
-require('brewlit/game_state_manager');
+require('brewlit/event')
+require('brewlit/game_state_manager')
 
 
 _G.debugging = true
@@ -33,6 +34,6 @@ function Activate()
 end
 
 function BrewlitGameMode:InitGameMode()
-	ListenToGameEvent("game_rules_state_change", GameStateManager.OnChangeState, self)
+	ListenToGameEvent("game_rules_state_change", GameStateManager.OnChangeState, nil)
 	Brewlit:Start()
 end

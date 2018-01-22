@@ -1,6 +1,5 @@
 --This class is for setting the rules and the game mode
 if Setup == nil then
-	print("Creating Setup")
 	Setup = class ({})
 end
 
@@ -39,12 +38,22 @@ function Setup:Quick(ctx)
 	
 	Setup:SetTeams()
 	
+	GameStateManager.RandomAfterState = DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
+	
 	GameRules:SetPostGameTime(30)
 	GameRules:SetShowcaseTime(0)
 	
 	local GameMode = GameRules:GetGameModeEntity()
-	GameMode:SetAnnouncerDisabled(true)
+	--GameMode:SetAnnouncerDisabled(true)
 	GameMode:SetDaynightCycleDisabled(true)
+end
+
+--2 teams of 5 players
+function Setup:DefaultTeams()
+	for i = 1, 2 do
+		Setup.TeamTable[i] = {}
+		Setup.TeamTable[i]["players"] = 5
+	end
 end
 
 --sets the teams based off the Setup.teams table
