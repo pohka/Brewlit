@@ -20,7 +20,7 @@ Table:
  * entindex (int) : index of the entity which bought back
  * player_id (int) : the id of the player of the server
 ]]
-function Event:Buyback(func, tbl)
+function Event:Buyback(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_buyback", 
 		function(event)
@@ -45,7 +45,7 @@ returns:
  * ability : CDOTABaseAbility - either an item or ability
  * player : CDOTAPlayer
 ]]
-function Event:PlayerAbilityCast(func, tbl)
+function Event:PlayerAbilityCast(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_begin_cast", 
 		function(event)
@@ -67,7 +67,7 @@ Table:
  * abilityname (string) : name of the ability used e.g. pudge_rot
  * PlayerID (short) : the id of the player who owns the caster
 ]]
-function Event:PlayerAbilityUsed(func, tbl)
+function Event:PlayerAbilityUsed(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_used_ability", 
 		function(event)
@@ -90,7 +90,7 @@ Table:
  * player (short) : index of the player on the server
  * abilityname (string) : name of the ability e.g. pudge_rot
 ]]
-function Event:PlayerAbilityLearned(func, tbl)
+function Event:PlayerAbilityLearned(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_learned_ability", 
 		function(event)
@@ -112,7 +112,7 @@ Table:
  * player (short) : index of the player on the server
  * level (short) : The level of the player after they leveled up
 ]]
-function Event:PlayerLevelUp(func, tbl)
+function Event:PlayerLevelUp(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_gained_level", 
 		function(event)
@@ -138,8 +138,7 @@ Table:
  * silent (bool) : if true wont print the team join messages
  * isbot (bool) : zero if is real player, 1 is player is a bot
 ]]
-function Event:PlayerChangeTeam(func, tbl)
-	ListenToGameEvent("player_team", func, tbl)
+function Event:PlayerChangeTeam(func, t)
 	if t == nil then
 		ListenToGameEvent("player_team", 
 		function(event)
@@ -189,8 +188,8 @@ A player reconnected to the game (not sure if this works)
 Table:	 
  * event (local) : the data include the realitive infomation
 ]]
-function Event:PlayerReconnected(func, tbl)
-	ListenToGameEvent("player_reconnected", func(t), tbl)
+function Event:PlayerReconnected(func, t)
+	ListenToGameEvent("player_reconnected", func(t), t)
 end
 
 --[[
@@ -220,15 +219,31 @@ end
 -- Unit events
 --------------------------------------
 --[[
-When a unit is damaged
+When a unit is damaged by an ability
 Table:
- * entindex_killed (long) : entity index of the killer
+ * entindex_killed (long) : entity index of the killed
  * entindex_attacker (long) : entity index of the killer
  * entindex_inflictor (long) : entity index of the ability used, will be void if not killed by an ability
  * damagebits (long) : flag for the damage look at DOTADamageFlag_t, it will be zero most of the time
 ]]
-function Event:Damaged(func, tbl)
-	ListenToGameEvent("entity_hurt", func, tbl)
+function Event:UnitDamaged(func, t)
+	if t == nil then
+		ListenToGameEvent("entity_hurt", 
+		function(event)
+			local tbl = {
+				unit = EntIndexToHScript(event.entindex_killed),
+				attacker = EntIndexToHScript(event.entindex_attacker),
+				damageFlag = event.damagebits
+			}
+			
+			if event.entindex_inflictor then
+				tbl["ability"] = EntIndexToHScript(event.entindex_inflictor)
+			end
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("entity_hurt", func(t), t)
+	end
 end
 
 
@@ -240,8 +255,24 @@ Table:
  * entindex_inflictor (long) : entity index of the ability used, will be void if not killed by an ability
  * damagebits (long) : flag for the damage look at DOTADamageFlag_t, it will be zero most of the time
 ]]
-function Event:Killed(func, tbl)
-	ListenToGameEvent("entity_killed", func, tbl)
+function Event:UnitKilled(func, t)
+	if t == nil then
+		ListenToGameEvent("entity_killed", 
+		function(event)
+			local tbl = {
+				unit = EntIndexToHScript(event.entindex_killed),
+				attacker = EntIndexToHScript(event.entindex_attacker),
+				damageFlag = event.damagebits
+			}
+			
+			if event.entindex_inflictor then
+				tbl["ability"] = EntIndexToHScript(event.entindex_inflictor)
+			end
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("entity_killed", func(t), t)
+	end
 end
 
 --[[
@@ -262,8 +293,19 @@ When a unit is spawned
 Table:
   * entindex (long): entity index of the unit spawned
 ]]
-function Event:Spawned(func, tbl)
-	ListenToGameEvent("npc_spawned", func, tbl)
+function Event:UnitSpawned(func, t)
+	if t == nil then
+		ListenToGameEvent("npc_spawned", 
+		function(event)
+			local tbl = {
+				unit = EntIndexToHScript(event.entindex)
+			}
+
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("npc_spawned", func(t), t)
+	end
 end
 
 --[[
@@ -273,8 +315,22 @@ Table:
  * teamnumber (short) : the team number of the tower owners
  * gold (short) : amount of gold rewarded for the tower
 ]]
-function Event:TowerKilled(func, tbl)
-	ListenToGameEvent("dota_tower_kill", func, tbl)
+function Event:TowerKilled(func, t)
+	if t == nil then
+		ListenToGameEvent("dota_tower_kill", 
+		function(event)
+			local tbl = {
+				playerIndex = event.killer_userid,
+				team = event.teamnumber,
+				teamName = GetTeamName(event.teamnumber),
+				gold = event.gold
+			}
+
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_tower_kill", func(t), t)
+	end
 end
 
 
