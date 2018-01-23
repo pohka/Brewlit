@@ -3,7 +3,7 @@
 function Brewlit:Start()
 	print("Brewlit:Start()")
 	Setup:Quick(self)
-	Event:Ontest(test)
+	Event:PlayerSpawned(test)
 	--GameRules:SetGameWinner(2)
 	--GameRules:SetHeroSelectionTime(5)
 end
