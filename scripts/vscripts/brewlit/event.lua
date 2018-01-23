@@ -25,8 +25,8 @@ function Event:Buyback(func, t)
 		ListenToGameEvent("dota_buyback", 
 		function(event)
 			local tbl = {
-				entity = EntIndexToHScript(event.entindex),
-				playerID =  event.player_id
+				hero = EntIndexToHScript(event.entindex),
+				player =  PlayerResource:GetPlayer(event.player_id)
 			}
 			func(tbl)
 		end, nil)
@@ -49,9 +49,11 @@ function Event:PlayerAbilityCast(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_begin_cast", 
 		function(event)
+			local player = PlayerResource:GetPlayer(event.PlayerID)
 			local tbl = {
 				ability = PlayerHelper:GetAbilityByName(event.PlayerID, event.abilityname),
-				player =  PlayerResource:GetPlayer(event.PlayerID)
+				player =  player,
+				hero = player:GetAssignedHero()
 			}
 			func(tbl)
 		end, nil)
@@ -71,10 +73,12 @@ function Event:PlayerAbilityUsed(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_used_ability", 
 		function(event)
+			local player = PlayerResource:GetPlayer(event.PlayerID)
 			local tbl = {
 				caster = EntIndexToHScript(event.caster_entindex),
 				ability = PlayerHelper:GetAbilityByName(event.PlayerID, event.abilityname),
-				player =  PlayerResource:GetPlayer(event.PlayerID)
+				player =  player,
+				hero = player:GetAssignedHero()
 			}
 			func(tbl)
 		end, nil)
@@ -94,10 +98,12 @@ function Event:PlayerAbilityLearned(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_learned_ability", 
 		function(event)
+			local player = PlayerResource:GetPlayer(event.PlayerID)
 			local tbl = {
 				playerIndex = event.player,
 				ability = PlayerHelper:GetAbilityByName(event.PlayerID, event.abilityname),
-				player =  PlayerResource:GetPlayer(event.PlayerID)
+				player =  player,
+				hero = player:GetAssignedHero()
 			}
 			func(tbl)
 		end, nil)
@@ -171,10 +177,12 @@ function Event:PlayerKilled(func, tbl)
 	if t == nil then
 		ListenToGameEvent("dota_player_killed", 
 		function(event)
+			player = PlayerResource:GetPlayer(event.PlayerID)
 			local tbl = {
 				killedByTower = event.TowerKill,
 				killedByHero = event.HeroKill,
-				player = PlayerResource:GetPlayer(event.PlayerID)
+				player = player,
+				hero = player:GetAssignedHero()
 			}
 			func(tbl)
 		end, nil)
@@ -351,10 +359,12 @@ function Event:ItemCombined(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_item_combined", 
 		function(event)
+			local player = PlayerResource:GetPlayer(event.PlayerID)
 			local tbl = {
 				itemCost = event.itemcost,
 				itemName = event.itemname,
-				player = PlayerResource:GetPlayer(event.PlayerID)
+				player = player,
+				hero = player:GetAssignedHero()
 			}
 
 			func(tbl)
@@ -375,10 +385,12 @@ function Event:ItemPurchased(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_item_purchased", 
 		function(event)
+			local player = PlayerResource:GetPlayer(event.PlayerID)
 			local tbl = {
 				itemCost = event.itemcost,
 				itemName = event.itemname,
-				player = PlayerResource:GetPlayer(event.PlayerID)
+				player = player,
+				hero = player:GetAssignedHero()
 			}
 
 			func(tbl)
@@ -401,10 +413,12 @@ function Event:ItemPickedUp(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_item_picked_up", 
 		function(event)
+			local player = PlayerResource:GetPlayer(event.PlayerID)
 			local tbl = {
 				item = EntIndexToHScript(event.ItemEntityIndex),
 				hero = EntIndexToHScript(event.HeroEntityIndex),
-				player = PlayerResource:GetPlayer(event.PlayerID)
+				player = player,
+				hero = player:GetAssignedHero()
 			}
 
 			func(tbl)
@@ -431,11 +445,13 @@ function Event:Chat(func, t)
 	if t == nil then
 		ListenToGameEvent("player_chat", 
 		function(event)
+		local player = PlayerResource:GetPlayer(event.playerid)
 			local tbl = {
 				isTeamChat = event.teamonly,
 				playerIndex = event.userid,
 				text = event.text,
-				player = PlayerResource:GetPlayer(event.playerid)
+				player = player,
+				hero = player:GetAssignedHero()
 			}
 
 			func(tbl)
