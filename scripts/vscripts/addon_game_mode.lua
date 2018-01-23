@@ -13,6 +13,7 @@ require('main')
 require('brewlit/setup')
 require('brewlit/event')
 require('brewlit/game_state_manager')
+require('brewlit/player_helper')
 
 
 _G.debugging = true

@@ -3,7 +3,7 @@
  All of the built-in engine events that are currently working
 ==================================================================================
 
-Note: passing a parameter for tbl will override the default table returned to the callback function
+Note: passing a parameter for tbl will override the table returned to the callback function
 ]]
 
 if Event == nil then
@@ -17,21 +17,47 @@ end
 --[[
 When a player uses buyback
 Table:
- * entindex (int) : index of the entity which bough back
+ * entindex (int) : index of the entity which bought back
  * player_id (int) : the id of the player of the server
 ]]
-function Event:BuyBack(func, tbl)
-	ListenToGameEvent("dota_buyback", func, tbl)
+function Event:Buyback(func, tbl)
+	if t == nil then
+		ListenToGameEvent("dota_buyback", 
+		function(event)
+			local tbl = {
+				entity = EntIndexToHScript(event.entindex),
+				playerID =  event.player_id
+			}
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_buyback", func(t), t)
+	end
 end
 
 --[[
-When a player begins to cast an ability (Note: the player can cancel the ability before it's used)
-Table:
+When a player begins to cast an ability (also listens to items Note: the player can cancel the ability before it's used)
+Raw table:
  * abilityname (string) : name of the ability e.g. pudge_rot
  * PlayerID (short) : the id of the player
+ 
+returns:
+ * ability : CDOTABaseAbility - either an item or ability
+ * player : CDOTAPlayer
 ]]
 function Event:PlayerAbilityCast(func, tbl)
-	ListenToGameEvent("dota_player_begin_cast", func, tbl)
+	if t == nil then
+		ListenToGameEvent("dota_player_begin_cast", 
+		function(event)
+			local tbl = {
+				ability = PlayerHelper:GetAbilityByName(event.PlayerID, event.abilityname),
+				player =  PlayerResource:GetPlayer(event.PlayerID)
+			}
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_player_begin_cast", func(t), t)
+	end
 end
 
 --[[
@@ -42,28 +68,63 @@ Table:
  * PlayerID (short) : the id of the player who owns the caster
 ]]
 function Event:PlayerAbilityUsed(func, tbl)
-	ListenToGameEvent("dota_player_used_ability", func, tbl)
+	if t == nil then
+		ListenToGameEvent("dota_player_used_ability", 
+		function(event)
+			local tbl = {
+				caster = EntIndexToHScript(event.caster_entindex),
+				ability = PlayerHelper:GetAbilityByName(event.PlayerID, event.abilityname),
+				player =  PlayerResource:GetPlayer(event.PlayerID)
+			}
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_player_used_ability", func(t), t)
+	end
 end
 
 --[[
 When a player learns an ability (also listens to talents)
 Table:
  * PlayerID	(short) : id of the player
- * player (short) : index of the player
+ * player (short) : index of the player on the server
  * abilityname (string) : name of the ability e.g. pudge_rot
 ]]
 function Event:PlayerAbilityLearned(func, tbl)
-	ListenToGameEvent("dota_player_learned_ability", func, tbl)
+	if t == nil then
+		ListenToGameEvent("dota_player_learned_ability", 
+		function(event)
+			local tbl = {
+				playerIndex = event.player,
+				ability = PlayerHelper:GetAbilityByName(event.PlayerID, event.abilityname),
+				player =  PlayerResource:GetPlayer(event.PlayerID)
+			}
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_player_learned_ability", func(t), t)
+	end
 end
 
 --[[
 When a player levels up
 Table:
- * PlayerID (short) : id of the player who leveled up
+ * player (short) : index of the player on the server
  * level (short) : The level of the player after they leveled up
 ]]
 function Event:PlayerLevelUp(func, tbl)
-	ListenToGameEvent("dota_player_gained_level", func, tbl)
+	if t == nil then
+		ListenToGameEvent("dota_player_gained_level", 
+		function(event)
+			local tbl = {
+				playerIndex = event.player,
+				level = event.level
+			}
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_player_gained_level", func(t), t)
+	end
 end
 
 --[[
@@ -79,6 +140,25 @@ Table:
 ]]
 function Event:PlayerChangeTeam(func, tbl)
 	ListenToGameEvent("player_team", func, tbl)
+	if t == nil then
+		ListenToGameEvent("player_team", 
+		function(event)
+			local tbl = {
+				playerIndex = event.userid,
+				team = event.team,
+				teamName = GetTeamName(event.team),
+				oldTeam = event.oldteam,
+				oldTeamName = GetTeamName(event.oldteam),
+				causedByDisconnect = event.disconnect,
+				autoAssignedToTeam = event.autoteam,
+				silent = event.silent,
+				isBot = event.isbot
+			}
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("player_team", func(t), t)
+	end
 end
 
 --[[
@@ -89,16 +169,28 @@ Table:
  * PlayerID	(short) : id of the player killed
 ]]
 function Event:PlayerKilled(func, tbl)
-	ListenToGameEvent("dota_player_killed", func, tbl)
+	if t == nil then
+		ListenToGameEvent("dota_player_killed", 
+		function(event)
+			local tbl = {
+				killedByTower = event.TowerKill,
+				killedByHero = event.HeroKill,
+				player = PlayerResource:GetPlayer(event.PlayerID)
+			}
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_player_killed", func(t), t)
+	end
 end
 
 --[[
-A player reconnected to the game
+A player reconnected to the game (not sure if this works)
 Table:	 
  * event (local) : the data include the realitive infomation
 ]]
 function Event:PlayerReconnected(func, tbl)
-	ListenToGameEvent("player_reconnected", func, tbl)
+	ListenToGameEvent("player_reconnected", func(t), tbl)
 end
 
 --[[
@@ -107,8 +199,19 @@ Table:
  * userid (short) : user ID on server
  * entindex (long) : entity index of the player
 ]]
-function Event:PlayerSpawned(func, tbl)
-	ListenToGameEvent("player_spawn", func, tbl)
+function Event:PlayerSpawned(func, t)
+	if t == nil then
+		ListenToGameEvent("player_spawn", 
+		function(event)
+			local tbl = {
+				entity = EntIndexToHScript(event.entindex),
+				playerIndex =  event.userid
+			}
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("player_spawn", func(t), t)
+	end
 end
 
 
@@ -262,15 +365,3 @@ Table:
 function Event:TreeCut(func, tbl)
 	ListenToGameEvent("tree_cut", func, tbl)
 end
-
-
-
-
-
-
-
-
-
-
-
-

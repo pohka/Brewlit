@@ -3,19 +3,36 @@
 function Brewlit:Start()
 	print("Brewlit:Start()")
 	Setup:Quick(self)
+	--Event:PlayerSpawned(test)
 	Event:PlayerSpawned(test)
+	--Event:Buyback(test)
 	--GameRules:SetGameWinner(2)
 	--GameRules:SetHeroSelectionTime(5)
 end
 
-function test(val)
-	print("EVENT:")
-	if val ~=nil then
-		--print(val["key1"])
-		print("table:")
-		table.foreach(val, print)
+function test(event)
+	print("Event:")
+	if event ~=nil then
+		printTable(event)
 	end
-	--local id = val.entindex_inflictor;
-	--hScript = EntIndexToHScript(id)
-	--print(hScript:GetName())
+end
+
+function test2(event)
+	table.foreach(event, print)
+end
+
+--prints the key and the type of each variable in the table
+function printTable(tbl)
+	table.foreach(tbl, 
+	function(k,v)
+		local vType
+		
+		if type(v) == "table" then
+			vType = v:GetClassname()
+		else
+			vType = type(v)
+		end
+		
+		print(k .. ": " .. vType)
+	end)
 end
