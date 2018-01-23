@@ -9,7 +9,7 @@
 * Setup - game rules
 * GameMode mangement
   * events
-*  states
+  * states
   * custom states
 * Animations
 * Projectiles

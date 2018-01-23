@@ -56,7 +56,7 @@ function Setup:DefaultTeams()
 	end
 end
 
---sets the teams based off the Setup.teams table
+--sets the teams based off the Setup.TeamTable
 function Setup:SetTeams()
 	local maxTeam = table.getn(Setup.TeamTable) + 1
 	for teamNum = 2, maxTeam do
