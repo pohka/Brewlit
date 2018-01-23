@@ -347,8 +347,21 @@ Table:
  * itemname (string) : name of the new item e.g. item_pers
  * PlayerID (short) : id of the player
 ]]
-function Event:ItemCombined(func, tbl)
-	ListenToGameEvent("dota_item_combined", func, tbl)
+function Event:ItemCombined(func, t)
+	if t == nil then
+		ListenToGameEvent("dota_item_combined", 
+		function(event)
+			local tbl = {
+				itemCost = event.itemcost,
+				itemName = event.itemname,
+				player = PlayerResource:GetPlayer(event.PlayerID)
+			}
+
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_item_combined", func(t), t)
+	end
 end
 
 --[[
@@ -358,8 +371,21 @@ Table:
  * itemname (short) : name of the item e.g. item_bottle
  * PlayerID (short) : id of the player who bought the item
 ]]
-function Event:ItemPurchased(func, tbl)
-	ListenToGameEvent("dota_item_purchased", func, tbl)
+function Event:ItemPurchased(func, t)
+	if t == nil then
+		ListenToGameEvent("dota_item_purchased", 
+		function(event)
+			local tbl = {
+				itemCost = event.itemcost,
+				itemName = event.itemname,
+				player = PlayerResource:GetPlayer(event.PlayerID)
+			}
+
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_item_purchased", func(t), t)
+	end
 end
 
 --[[
@@ -371,8 +397,21 @@ Table:
  * HeroEntityIndex	(short) : enity index of the hero
 
 ]]
-function Event:ItemPickedUp(func, tbl)
-	ListenToGameEvent("dota_item_picked_up", func, tbl)
+function Event:ItemPickedUp(func, t)
+	if t == nil then
+		ListenToGameEvent("dota_item_picked_up", 
+		function(event)
+			local tbl = {
+				item = EntIndexToHScript(event.ItemEntityIndex),
+				hero = EntIndexToHScript(event.HeroEntityIndex),
+				player = PlayerResource:GetPlayer(event.PlayerID)
+			}
+
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("dota_item_picked_up", func(t), t)
+	end
 end
 
 
@@ -388,8 +427,22 @@ Table:
  * playerid (short) : id of the player
  * text (string) : chat text
 ]]
-function Event:Chat(func, tbl)
-	ListenToGameEvent("player_chat", func, tbl)
+function Event:Chat(func, t)
+	if t == nil then
+		ListenToGameEvent("player_chat", 
+		function(event)
+			local tbl = {
+				isTeamChat = event.teamonly,
+				playerIndex = event.userid,
+				text = event.text,
+				player = PlayerResource:GetPlayer(event.playerid)
+			}
+
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("player_chat", func(t), t)
+	end
 end
 
 
@@ -399,8 +452,8 @@ Table:
  * abilityname (string) : name of the ability e.g. pudge_rot
  * interrupted (bool) : returns 1 if the channeling was interrupted
 ]]
-function Event:ChannelFinished(func, tbl)
-	ListenToGameEvent("dota_ability_channel_finished", func, tbl)
+function Event:ChannelFinished(func, t)
+	ListenToGameEvent("dota_ability_channel_finished", func(t), t)
 end
 
 --[[
@@ -408,8 +461,8 @@ When a non player unit started casting an ability
 Table:
  * abilityname (string) : name of the ability e.g. pudge_rot
 ]]
-function Event:NonPlayerBeginCast(func, tbl)
-	ListenToGameEvent("dota_non_player_begin_cast", func, tbl)
+function Event:NonPlayerBeginCast(func, t)
+	ListenToGameEvent("dota_non_player_begin_cast", func, t)
 end
 
 --[[
@@ -418,6 +471,18 @@ Table:
  * tree_x (float) : x coordinates
  * tree_y (float) : y coordinates
 ]]
-function Event:TreeCut(func, tbl)
-	ListenToGameEvent("tree_cut", func, tbl)
+function Event:TreeCut(func, t)
+	if t == nil then
+		ListenToGameEvent("tree_cut", 
+		function(event)
+			local tbl = {
+				treeX = event.tree_x,
+				treeY = event.tree_y,
+			}
+
+			func(tbl)
+		end, nil)
+	else
+		ListenToGameEvent("tree_cut", func(t), t)
+	end
 end
