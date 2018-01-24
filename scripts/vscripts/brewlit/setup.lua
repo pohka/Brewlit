@@ -19,17 +19,18 @@ It will use most of the default dota startup when posted on the workshop but for
 ]]
 function Setup:Quick(ctx)
 	print("Setup:Quick()")
-
-	GameRules:SetPreGameTime(0)
 	
 	if IsInToolsMode() and debugging then
 		GameRules:EnableCustomGameSetupAutoLaunch(true)
 		GameRules:SetCustomGameSetupAutoLaunchDelay(0)
 		GameRules:SetHeroSelectionTime(0)
 		GameRules:SetStrategyTime(0)
+		
 	else
 		GameRules:SetCustomGameSetupAutoLaunchDelay(60)
 	end
+	
+	GameRules:SetPreGameTime(0)
 	
 	for i = 1, 2 do
 		Setup.TeamTable[i] = {}
@@ -38,14 +39,14 @@ function Setup:Quick(ctx)
 	
 	Setup:SetTeams()
 	
-	GameStateManager.RandomAfterState = DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
+	GameStateManager:Setup(1 , DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP)
 	
 	GameRules:SetPostGameTime(30)
 	GameRules:SetShowcaseTime(0)
 	
 	local GameMode = GameRules:GetGameModeEntity()
-	--GameMode:SetAnnouncerDisabled(true)
-	GameMode:SetDaynightCycleDisabled(true)
+	GameMode:SetAnnouncerDisabled(true)
+	--GameMode:SetDaynightCycleDisabled(true)
 end
 
 --2 teams of 5 players

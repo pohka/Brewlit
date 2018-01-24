@@ -3,25 +3,27 @@
 function Brewlit:Start()
 	print("Brewlit:Start()")
 	Setup:Quick(self)
+	--printTable(Setup)
 	--Event:PlayerSpawned(test)
-	Event:ItemPickedUp(test)
-	Event:Chat(test)
+	--Event:ItemPickedUp(test)
+	--Event:Chat(test)
 	--Event:Buyback(test)
 	--GameRules:SetGameWinner(2)
 	--GameRules:SetHeroSelectionTime(5)
 	--newCls()
+	
+end
+
+function Brewlit:Update()
+	print("time:" .. GameRules:GetTimeOfDay())
+	--print("time:" .. Time:OfDay())
+	GameTime:SetDayTime(0.5)
 end
 
 --[[
 function newCls()
 
-	--time
-	GameRules:GetGameTime() -- (bool IncludePregameTime, bool IncludeNegativeTime) Returns the actual DOTA in-game clock time.
-	GameRules:IsGamePaused()
-	GameRules:IsDaytime()
-	GameRules:GetTimeOfDay()
-	GameRules:SetTimeOfDay()
-	GameRules:IsNightstalkerNight()
+	
 	
 	
 	

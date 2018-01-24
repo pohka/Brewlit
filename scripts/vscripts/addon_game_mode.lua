@@ -14,6 +14,7 @@ require('brewlit/setup')
 require('brewlit/event')
 require('brewlit/game_state_manager')
 require('brewlit/player_helper')
+require('brewlit/game_time')
 
 
 _G.debugging = true
@@ -37,4 +38,5 @@ end
 function BrewlitGameMode:InitGameMode()
 	ListenToGameEvent("game_rules_state_change", GameStateManager.OnChangeState, nil)
 	Brewlit:Start()
+	GameStateManager:Init()
 end
