@@ -17,15 +17,41 @@ end
 function Brewlit:Update()
 	print("time:" .. GameRules:GetTimeOfDay())
 	--print("time:" .. Time:OfDay())
-	GameTime:SetDayTime(0.5)
+	--GameTime:SetDayTime(0.5)
+	print("Items Dropped:")
+	
+	--[[
+	local items = ItemManager:GetDroppedItems()
+	table.foreach(items, function(k,v)
+		print(v:GetContainedItem():GetOwner())
+	end)
+	]]
+	
+	local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS,
+                              Vector(0, 0, 0),
+                              nil,
+                              FIND_UNITS_EVERYWHERE,
+                              DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                              DOTA_UNIT_TARGET_ALL,
+                              DOTA_UNIT_TARGET_FLAG_NONE,
+                              FIND_ANY_ORDER,
+                              false)
+ 
+	-- Make the found units move to (0, 0, 0)
+	for _,unit in pairs(units) do
+	   local dropped = ItemManager:GetDroppedItemsForHero(unit)
+	   printTable(dropped)
+	   if dropped[0] ~= nil then
+			print("picking up")
+			ItemManager:PickUpItem(unit, dropped[0])
+	   end
+	end
+	
+	
 end
 
 --[[
 function newCls()
-
-	
-	
-	
 	
 	--rules for picking and respawning of heroes
 	GameRules:LockCustomGameSetupTeamAssignment(true)

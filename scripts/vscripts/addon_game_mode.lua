@@ -15,7 +15,7 @@ require('brewlit/event')
 require('brewlit/game_state_manager')
 require('brewlit/player_helper')
 require('brewlit/game_time')
-
+require('brewlit/item_manager')
 
 _G.debugging = true
 
