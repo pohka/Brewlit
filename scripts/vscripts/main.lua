@@ -5,9 +5,15 @@ function Brewlit:Start()
 	Setup:Quick(self)
 end
 
+--called once every second
 function Brewlit:Update()
 	--local heroes = Query:GetTrees()
 	--Helper:PrintTable(heroes)
+end
+
+--you can listen to particular state changes using listener functions called from GameStateManager
+function Brewlit:OnInProgress()
+	print("game started")
 end
 
 --[[

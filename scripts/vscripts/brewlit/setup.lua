@@ -106,7 +106,3 @@ function Setup:AllRandomHero()
 	end)
 end
 
-function Setup:GetTeamNumbers()
-	local tbl = {}
-	
-end
