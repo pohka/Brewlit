@@ -32,12 +32,12 @@ function Setup:Quick(ctx)
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:SetPreGameTime(0)
 	
-	Setup:DefaultTeams()
+	Setup:TeamsDefault()
 	SetTeams()
 	
 	GameStateManager:Setup(1 , DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP)
 	
-	GameRules:SetPostGameTime(30)
+	GameRules:SetPostGameTime(5)
 	GameRules:SetShowcaseTime(0)
 	
 	local GameMode = GameRules:GetGameModeEntity()
@@ -52,12 +52,82 @@ function Setup:Quick(ctx)
 	Setup:DisableMusicEvents()
 end
 
+--boilerplate setup
+--[[
+function Setup:Custom()
+	local GameMode = GameRules:GetGameModeEntity()
+	
+	--LOBBY OPTIONS AND GAMESTATES DURATION
+	GameRules:SetCustomGameSetupAutoLaunchDelay(float seconds) 	--Set the amount of time to wait for auto launch.
+	GameRules:SetCustomGameSetupRemainingTime(float seconds) 	--Set the amount of remaining time, in seconds, for custom game setup. 0 = finish immediately, -1 = wait forever
+	GameRules:SetCustomGameSetupTimeout(float seconds) 			--Setup (pre-gameplay) phase timeout. 0 = instant, -1 = forever (until FinishCustomGameSetup is called)
+	GameRules:SetHeroSelectionTime(float seconds) 				--Sets the amount of time players have to pick their hero.
+	GameRules:SetPostGameTime(float seconds) 					--Sets the amount of time players have between the game ending and the server disconnecting them.
+	GameRules:SetPreGameTime(float seconds) 					--Sets the amount of time players have between picking their hero and game start.
+	GameRules:SetSameHeroSelectionEnabled(bool enabled) 		--When true, players can repeatedly pick the same hero.
+	GameRules:SetShowcaseTime(float seconds)					--Set the duration of the 'radiant versus dire' showcase screen.						
+	GameRules:SetStrategyTime(float seconds)					--Set the duration of the strategy phase.
+	GameRules:SetCustomGameEndDelay(float seconds) 				--Sets the delay time until the game ends (optional)
+	
+	
+	
+	--TEAM SETUP
+	--set the number of teams and players per team
+	Setup:TeamsCustom(int teamCount, int playersPerTeam)
+	
+	
+	--alternativly you can indivdually set the number of players on each team usingthe Setup.teamTable
+	local teamNum = DOTA_TEAM_GOODGUYS 
+	local numOfPlayers = 5
+	Setup.teamTable[teamNum] = {
+		players = numOfPlayers
+	}
+	teamNum = DOTA_TEAM_BADDGUYS 
+	numOfPlayers = 3
+	Setup.teamTable[teamNum] = {
+		players = numOfPlayers
+	}
+	SetTeams()
+	
+	
+	--GAMEMODE OPTIONS (OPTIONAL)
+	GameMode:SetAnnouncerDisabled(bool disabled)				--Are in-game announcers disabled?
+	GameMode:SetKillingSpreeAnnouncerDisabled(bool disabled)	--Mutes the in-game killing spree announcer.
+	GameMode:SetDaynightCycleDisabled(bool disabled)			--Enable or disable the day/night cycle.
+	GameMode:DisableHudFlip(bool disabled)						--Disables the minimap on right option, this is important when making a custom HUD
+	GameMode:SetDeathOverlayDisabled(bool disabled)				--Specify whether the full screen death overlay effect plays when the selected hero dies.
+	GameMode:SetWeatherEffectsDisabled(bool disabled)			--Set if weather effects are disabled.
+	Setup:DisableMusicEvents()									--Disables some music events
+	
+	
+	--MORE (OPTIONAL)
+	GameRules:SetUseUniversalShopMode(bool enabled)				--When true, all items from main shop are available at as long as any shop is in range.
+	GameMode:SetFixedRespawnTime(int seconds)					--Sets a fixed respawn time
+	GameRules:SetStartingGold(int gold)							--Set the starting gold amount.
+	GameRules:SetRuneSpawnTime(float seconds)					--Set the time between rune spawn times
+	GameRules:SetTreeRegrowTime(float seconds)					--Sets the tree regrow time
+	
+	
+	--OTHER
+	GameRules:LockCustomGameSetupTeamAssignment(true)
+	GameRules:ResetToHeroSelection() --	Restart the game at hero selection
+	GameRules:IsHeroRespawnEnabled()
+	GameRules:SetHeroRespawnEnabled()
+end
+]]
+
 --2 teams of 5 players
-function Setup:DefaultTeams()
-	for i = 2, 3 do
+function Setup:TeamsDefault()
+	Setup:TeamsCustom(2, 5)
+end
+
+--set the number of teams and the number of players per team
+function Setup:TeamsCustom(teamCount, playersPerTeam)
+	for i = 2, 1+teamCount do
 		Setup.teamTable[i] = {}
-		Setup.teamTable[i]["players"] = 5
+		Setup.teamTable[i]["players"] = playersPerTeam
 	end
+	SetTeams()
 end
 
 --sets the teams based off the teamTable

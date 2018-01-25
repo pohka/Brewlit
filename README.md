@@ -6,11 +6,20 @@
 --------
 * Debuger UI
   * filter bug msgs
-* Setup - game rules
+Simplify filters 
+  * xp
+  * gold
+  * runes
+  * unit
+  * damage
+  * projectile
+  * execute order
+  * inventory
+  * modifer gained
 * GameMode mangement
-  * events
-  * states
   * custom states
+  * round
+  * custom clock
 * Animations
 * Projectiles
 * AI
@@ -18,8 +27,6 @@
   *  state transitions
   * events
   * queue commands (such as path finding)
-* Common function calls
-  * foreach player hero(s)
 * Camera
   * preset angles (Side, topdown, forward follow)
   * smoothing transitions

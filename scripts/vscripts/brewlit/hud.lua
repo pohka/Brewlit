@@ -5,15 +5,7 @@ if HUD == nil then
 end
 
 --logs a message in the chat for all teams
---str is a html string
-function HUD:MessageAll(str)
-	for teamNum,teamInfo in pairs(Setup.teamTable) do
-		GameRules:SendCustomMessage(str, teamNum, 0)
-	end
-end
-
---logs a message in the chat for the team
---str is a html string
-function HUD:MessageTeam(str, teamNum)
-	GameRules:SendCustomMessage(str, teamNum, 0)
+--msg is a html string
+function HUD:SendChatMsg(msg)
+	GameRules:SendCustomMessage(msg, 2, 1)
 end
