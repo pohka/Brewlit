@@ -6,10 +6,6 @@
 Note: passing a parameter for tbl will override the table returned to the callback function
 ]]
 
-if Event == nil then
-	Event = class ({})
-end
-
 --------------------------------------
 -- Player events
 --------------------------------------
@@ -20,7 +16,7 @@ Table:
  * entindex (int) : index of the entity which bought back
  * player_id (int) : the id of the player of the server
 ]]
-function Event:Buyback(func, t)
+function Event:OnBuyback(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_buyback", 
 		function(event)
@@ -45,7 +41,7 @@ returns:
  * ability : CDOTABaseAbility - either an item or ability
  * player : CDOTAPlayer
 ]]
-function Event:PlayerAbilityCast(func, t)
+function Event:OnPlayerAbilityCast(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_begin_cast", 
 		function(event)
@@ -69,7 +65,7 @@ Table:
  * abilityname (string) : name of the ability used e.g. pudge_rot
  * PlayerID (short) : the id of the player who owns the caster
 ]]
-function Event:PlayerAbilityUsed(func, t)
+function Event:OnPlayerAbilityUsed(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_used_ability", 
 		function(event)
@@ -94,7 +90,7 @@ Table:
  * player (short) : index of the player on the server
  * abilityname (string) : name of the ability e.g. pudge_rot
 ]]
-function Event:PlayerAbilityLearned(func, t)
+function Event:OnPlayerAbilityLearned(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_learned_ability", 
 		function(event)
@@ -118,7 +114,7 @@ Table:
  * player (short) : index of the player on the server
  * level (short) : The level of the player after they leveled up
 ]]
-function Event:PlayerLevelUp(func, t)
+function Event:OnPlayerLevelUp(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_player_gained_level", 
 		function(event)
@@ -144,7 +140,7 @@ Table:
  * silent (bool) : if true wont print the team join messages
  * isbot (bool) : zero if is real player, 1 is player is a bot
 ]]
-function Event:PlayerChangeTeam(func, t)
+function Event:OnPlayerChangeTeam(func, t)
 	if t == nil then
 		ListenToGameEvent("player_team", 
 		function(event)
@@ -173,7 +169,7 @@ Table:
  * HeroKill	(bool) : returns 1 if killed by a hero
  * PlayerID	(short) : id of the player killed
 ]]
-function Event:PlayerKilled(func, tbl)
+function Event:OnPlayerKilled(func, tbl)
 	if t == nil then
 		ListenToGameEvent("dota_player_killed", 
 		function(event)
@@ -196,17 +192,17 @@ A player reconnected to the game (not sure if this works)
 Table:	 
  * event (local) : the data include the realitive infomation
 ]]
-function Event:PlayerReconnected(func, t)
+function Event:OnPlayerReconnected(func, t)
 	ListenToGameEvent("player_reconnected", func(t), t)
 end
 
 --[[
-Player spawned in game (to listen to respawning use Event:Spawned)
+Player spawned in game (to listen to respawning use Event:OnSpawned)
 Table:
  * userid (short) : user ID on server
  * entindex (long) : entity index of the player
 ]]
-function Event:PlayerSpawned(func, t)
+function Event:OnPlayerSpawned(func, t)
 	if t == nil then
 		ListenToGameEvent("player_spawn", 
 		function(event)
@@ -234,7 +230,7 @@ Table:
  * entindex_inflictor (long) : entity index of the ability used, will be void if not killed by an ability
  * damagebits (long) : flag for the damage look at DOTADamageFlag_t, it will be zero most of the time
 ]]
-function Event:UnitDamaged(func, t)
+function Event:OnUnitDamaged(func, t)
 	if t == nil then
 		ListenToGameEvent("entity_hurt", 
 		function(event)
@@ -263,7 +259,7 @@ Table:
  * entindex_inflictor (long) : entity index of the ability used, will be void if not killed by an ability
  * damagebits (long) : flag for the damage look at DOTADamageFlag_t, it will be zero most of the time
 ]]
-function Event:UnitKilled(func, t)
+function Event:OnUnitKilled(func, t)
 	if t == nil then
 		ListenToGameEvent("entity_killed", 
 		function(event)
@@ -292,7 +288,7 @@ Table:
  * HeroKill	(bool) : returns 1 if the unit killed was a hero
  * TowerKill (bool) : returns 1 if the unit killed was a tower
 ]]
-function Event:LastHit(func, tbl)
+function Event:OnLastHit(func, tbl)
 	ListenToGameEvent("last_hit", func, tbl)
 end
 
@@ -301,7 +297,7 @@ When a unit is spawned
 Table:
   * entindex (long): entity index of the unit spawned
 ]]
-function Event:UnitSpawned(func, t)
+function Event:OnUnitSpawned(func, t)
 	if t == nil then
 		ListenToGameEvent("npc_spawned", 
 		function(event)
@@ -323,7 +319,7 @@ Table:
  * teamnumber (short) : the team number of the tower owners
  * gold (short) : amount of gold rewarded for the tower
 ]]
-function Event:TowerKilled(func, t)
+function Event:OnTowerKilled(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_tower_kill", 
 		function(event)
@@ -355,7 +351,7 @@ Table:
  * itemname (string) : name of the new item e.g. item_pers
  * PlayerID (short) : id of the player
 ]]
-function Event:ItemCombined(func, t)
+function Event:OnItemCombined(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_item_combined", 
 		function(event)
@@ -381,7 +377,7 @@ Table:
  * itemname (short) : name of the item e.g. item_bottle
  * PlayerID (short) : id of the player who bought the item
 ]]
-function Event:ItemPurchased(func, t)
+function Event:OnItemPurchased(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_item_purchased", 
 		function(event)
@@ -409,7 +405,7 @@ Table:
  * HeroEntityIndex	(short) : enity index of the hero
 
 ]]
-function Event:ItemPickedUp(func, t)
+function Event:OnItemPickedUp(func, t)
 	if t == nil then
 		ListenToGameEvent("dota_item_picked_up", 
 		function(event)
@@ -441,7 +437,7 @@ Table:
  * playerid (short) : id of the player
  * text (string) : chat text
 ]]
-function Event:Chat(func, t)
+function Event:OnChat(func, t)
 	if t == nil then
 		ListenToGameEvent("player_chat", 
 		function(event)
@@ -468,7 +464,7 @@ Table:
  * abilityname (string) : name of the ability e.g. pudge_rot
  * interrupted (bool) : returns 1 if the channeling was interrupted
 ]]
-function Event:ChannelFinished(func, t)
+function Event:OnChannelFinished(func, t)
 	ListenToGameEvent("dota_ability_channel_finished", func(t), t)
 end
 
@@ -477,7 +473,7 @@ When a non player unit started casting an ability
 Table:
  * abilityname (string) : name of the ability e.g. pudge_rot
 ]]
-function Event:NonPlayerBeginCast(func, t)
+function Event:OnNonPlayerBeginCast(func, t)
 	ListenToGameEvent("dota_non_player_begin_cast", func, t)
 end
 
@@ -487,7 +483,7 @@ Table:
  * tree_x (float) : x coordinates
  * tree_y (float) : y coordinates
 ]]
-function Event:TreeCut(func, t)
+function Event:OnTreeCut(func, t)
 	if t == nil then
 		ListenToGameEvent("tree_cut", 
 		function(event)

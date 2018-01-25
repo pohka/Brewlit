@@ -4,9 +4,12 @@ if BrewlitGameMode == nil then
 	_G.BrewlitGameMode = class({})
 end
 
-
 if Brewlit == nil then
 	_G.Brewlit = class ({})
+end
+
+if Event == nil then
+	_G.Event = class ({})
 end
 
 require('main')

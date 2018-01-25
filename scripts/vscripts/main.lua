@@ -12,7 +12,7 @@ function Brewlit:Update()
 end
 
 --you can listen to particular state changes using listener functions called from GameStateManager
-function Brewlit:OnInProgress()
+function Event:OnStateInProgress()
 	print("game started")
 end
 

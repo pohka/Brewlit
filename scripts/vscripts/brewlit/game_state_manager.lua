@@ -10,7 +10,6 @@ settings = {
 
 function GameStateManager:Init()
 	local GameMode = GameRules:GetGameModeEntity()
-	local updateRate = 
 	GameMode:SetContextThink("Update", function() 
 			Brewlit:Update() 
 			return settings.updateRate 
@@ -42,39 +41,39 @@ end
 calls the listener function for the current state if it exists
 
 Listener functions:
-Brewlit:OnCustomGameSetup()
-Brewlit:OnHeroSelection()
-Brewlit:OnStrategyTime()
-Brewlit:OnTeamShowcase()
-Brewlit:OnPreGame()
-Brewlit:OnInProgress()
-Brewlit:OnPostGame()
-Brewlit:OnGameDisconnect()
+Event:OnStateCustomGameSetup()
+Event:OnStateHeroSelection()
+Event:OnStateStrategyTime()
+Event:OnStateTeamShowcase()
+Event:OnStatePreGame()
+Event:OnStateInProgress()
+Event:OnStatePostGame()
+Event:OnStateGameDisconnect()
 ]]
 function BroadcastStateChange(curState)
-	if curState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP and Brewlit.OnCustomGameSetup ~= nil then
-		Brewlit:OnCustomGameSetup()
+	if curState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP and Event.OnStateCustomGameSetup ~= nil then
+		Event:OnStateCustomGameSetup()
 		
-	elseif curState == DOTA_GAMERULES_STATE_PRE_GAME and Brewlit.OnHeroSelection ~= nil then
-		Brewlit:OnHeroSelection()
+	elseif curState == DOTA_GAMERULES_STATE_PRE_GAME and Event.OnStateHeroSelection ~= nil then
+		Event:OnStateHeroSelection()
 		
-	elseif curState == DOTA_GAMERULES_STATE_STRATEGY_TIME and Brewlit.OnStrategyTime ~= nil then
-		Brewlit:OnStrategyTime()
+	elseif curState == DOTA_GAMERULES_STATE_STRATEGY_TIME and Event.OnStateStrategyTime ~= nil then
+		Event:OnStateStrategyTime()
 		
-	elseif curState == DOTA_GAMERULES_STATE_TEAM_SHOWCASE and Brewlit.OnTeamShowcase ~= nil then
-		Brewlit:OnTeamShowcase()
+	elseif curState == DOTA_GAMERULES_STATE_TEAM_SHOWCASE and Event.OnStateTeamShowcase ~= nil then
+		Event:OnStateTeamShowcase()
 		
-	elseif curState == DOTA_GAMERULES_STATE_PRE_GAME and Brewlit.OnPreGame ~= nil then
-		Brewlit:OnPreGame()
+	elseif curState == DOTA_GAMERULES_STATE_PRE_GAME and Event.OnStatePreGame ~= nil then
+		Event:OnStatePreGame()
 		
-	elseif curState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS and Brewlit.OnInProgress ~= nil then
-		Brewlit:OnInProgress()
+	elseif curState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS and Event.OnStateInProgress ~= nil then
+		Event:OnStateInProgress()
 		
-	elseif curState == DOTA_GAMERULES_STATE_POST_GAME and Brewlit.OnPostGame ~= nil then
-		Brewlit:OnPostGame()
+	elseif curState == DOTA_GAMERULES_STATE_POST_GAME and Event.OnStatePostGame ~= nil then
+		Event:OnStatePostGame()
 		
-	elseif curState == DOTA_GAMERULES_STATE_DISCONNECT and Brewlit.OnGameDisconnect ~= nil then
-		Brewlit:OnGameDisconnect()
+	elseif curState == DOTA_GAMERULES_STATE_DISCONNECT and Event.OnStateGameDisconnect ~= nil then
+		Event:OnStateGameDisconnect()
 	end
 end
 
