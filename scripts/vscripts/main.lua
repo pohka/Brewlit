@@ -15,6 +15,7 @@ function Brewlit:Update()
 	HUD:MessageAll("hello World")
 	--GameStateManager:SetVictory("DansGame", 2)
 	--GameRules:SetGameWinner(2)
+	Helper:PrintTable(Find:Heroes())
 end
 
 
