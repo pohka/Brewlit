@@ -6,41 +6,9 @@ function Brewlit:Start()
 end
 
 function Brewlit:Update()
-	--local heroes = Helper:GetAllHeroes()
+	--local heroes = Query:GetTrees()
 	--Helper:PrintTable(heroes)
-	Helper:ForEachHero(
-		function(hero, tbl) 
-			print("hero: " .. hero:GetName() .. " - " .. tbl) 
-		end, GameTime:SinceStart())
 end
-	--print("time:" .. GameRules:GetTimeOfDay())
-	--print("time:" .. Time:OfDay())
-	--GameTime:SetDayTime(0.5)
-	--print("Items Dropped:")
-	--[[
-	local items = ItemManager:GetDroppedItems()
-	table.foreach(items, function(k,v)
-		print(v:GetContainedItem():GetOwner())
-	end)
-	
-	
-	local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS,
-                              Vector(0, 0, 0),
-                              nil,
-                              FIND_UNITS_EVERYWHERE,
-                              DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-                              DOTA_UNIT_TARGET_ALL,
-                              DOTA_UNIT_TARGET_FLAG_NONE,
-                              FIND_ANY_ORDER,
-                              false)
- 
-	-- Make the found units move to (0, 0, 0)
-	for _,unit in pairs(units) do
-		unit
-	end
-	
-	]]
-
 
 --[[
 function newCls()
@@ -53,15 +21,12 @@ function newCls()
 	
 	
 	--passive rules
+	GameRules:SetStartingGold()
 	GameRules:SetGoldPerTick()
 	GameRules:SetGoldTickTime()
 	GameRules:SetRuneSpawnTime()
 	GameRules:SetTreeRegrowTime()
 	
-	
-	--items
-	GameRules:NumDroppedItems()
-	GameRules:GetDroppedItem()
 	
 	
 	--host UI for managing players
@@ -84,11 +49,6 @@ function newCls()
 	GameRules:SetCustomVictoryMessage()
 	GameRules:SetCustomVictoryMessageDuration()
 	
-
-	--music
-	GameRules:SetCustomGameAllowHeroPickMusic()
-	GameRules:SetCustomGameAllowMusicAtGameStart()
-	GameRules:SetCustomGameAllowBattleMusic()
 	
 	--end condition
 	GameRules:SetGameWinner()
@@ -104,8 +64,9 @@ function newCls()
 	GameRules:SetPreGameTime()
 	GameRules:SetSameHeroSelectionEnabled()
 	GameRules:SetShowcaseTime()
-	GameRules:SetStartingGold()
 	GameRules:SetStrategyTime()
+	
+	
 	GameRules:SetUseBaseGoldBountyOnHeroes()
 	GameRules:SetUseCustomHeroXPValues()
 	GameRules:SetUseUniversalShopMode()
