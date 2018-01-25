@@ -95,3 +95,11 @@ function GameStateManager:GetCurrentState()
 	return GameRules:State_Get()
 end
 
+--sets the team winner and victory message
+function GameStateManager:SetVictory(msg, teamNum)
+	if GameRules:State_Get() < DOTA_GAMERULES_STATE_POST_GAME then
+		GameRules:SetCustomVictoryMessage(msg)
+		GameRules:SetGameWinner(2)
+	end
+end
+
