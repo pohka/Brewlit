@@ -1,0 +1,40 @@
+<root>
+  <styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/debugger.css" />
+  </styles>
+  <scripts>
+		<include src="file://{resources}/scripts/custom_game/debugger.js" />
+  </scripts>
+	
+	<Panel class="debugger-con">
+		<Panel class="debugger-title">
+			<Label text="Brewlit Debugger"/>
+		</Panel>
+		<Panel class="debugger-menu">
+			<Button onactivate="btnClick()">
+				<Label text="Filter" />
+			</Button>
+			<Button onactivate="btnClick()">
+				<Label text="API" />
+			</Button>
+			<Button onactivate="btnClick()">
+				<Label text="Clear" />
+			</Button>
+		</Panel>
+		<Panel class="debugger-msg-con">
+			<Panel class="debugger-msg">
+				<Label text="line 1" />
+			</Panel>
+			<Panel class="debugger-msg debug-error">
+				<Label text="Error example" />
+			</Panel>
+			<Panel class="debugger-msg">
+				<Label text="line 3" />
+			</Panel>
+			<Panel class="debugger-msg">
+				<Label text="line 4" />
+			</Panel>
+		</Panel>
+	</Panel>
+ </root>

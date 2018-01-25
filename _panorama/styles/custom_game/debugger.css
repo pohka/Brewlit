@@ -1,0 +1,89 @@
+.debugger-con
+{
+	margin-left: -px;
+	margin-top: 130px;
+	color: #FFFFFF;
+	background-color: rgba(0,0,0,0.8);
+	width : 600px;
+	brightness: 1.5;
+}
+
+.debugger-title
+{
+	background-color: #eb5a0b;
+	padding: 5px 30px;
+	width: 100%;
+	height: 50px;
+}
+
+.debugger-title Label
+{
+	color: #FFF;
+	font-size:	30px;
+	line-height: 40px;
+}
+
+.debugger-menu
+{
+	margin-top: 50px;
+	height : 40px;
+	width:100%;
+	background-color: #DDD;
+	flow-children: right;
+}
+
+.debugger-menu Button:hover
+{
+	background-color: #eb5a0b;
+}
+
+.debugger-menu Button:hover Label
+{
+	color: #FFF;
+}
+
+.debugger-menu Label
+{
+	color: #000;
+	width: 100px;
+	padding: 5px 10px;
+	font-size: 24px;
+	line-height: 30px;
+	text-align: center;
+}
+
+.debugger-msg-con
+{
+	margin-top: 90px;
+	height: 600px;
+	width: 100%;
+	flow-children: down;
+}
+
+
+.debugger-msg
+{
+	width: 100%;
+	background-color: rgba(0,0,0,0.7);
+	padding: 0px 24px;
+	height: 48px;
+	line-height: 39px;
+	border-bottom: 1px solid #777;
+}
+
+.debugger-msg Label
+{
+	font-size: 24px;
+	width: 100%;
+}
+
+.debug-error
+{
+	background-color: #da3e3e;
+	border-bottom: 1px solid #FFF;
+}
+
+.debug-error Label
+{
+	color: #fff;
+}
