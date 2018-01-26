@@ -43,6 +43,24 @@ end
 
 function BrewlitGameMode:InitGameMode()
 	ListenToGameEvent("game_rules_state_change", GameStateManager.OnChangeState, nil)
+	CustomGameEventManager:RegisterListener("debug", DebuggerCommand)
 	Brewlit:Start()
 	GameStateManager:Init()
+	
+end
+
+--Logs a message to the debugger
+function Brewlit:Log(msg, logType)
+	if logType == nil then
+		logType = "default";
+	end
+	
+	CustomNetTables:SetTableValue("debug", "log", {logType = logType, msg = msg, t = GameTime:SinceStart()})
+end
+
+--Callback function for commands issued by the user from the debugger
+function DebuggerCommand(index, data)
+	if data['command'] == "pause" then
+		PauseGame(not GameRules:IsGamePaused())
+	end
 end

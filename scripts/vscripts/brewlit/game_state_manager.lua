@@ -51,6 +51,7 @@ Event:OnStatePostGame()
 Event:OnStateGameDisconnect()
 ]]
 function BroadcastStateChange(curState)
+
 	if curState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP and Event.OnStateCustomGameSetup ~= nil then
 		Event:OnStateCustomGameSetup()
 		

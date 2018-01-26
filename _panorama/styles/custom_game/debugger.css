@@ -1,17 +1,23 @@
 .debugger-con
 {
-	margin-left: -px;
-	margin-top: 130px;
+	margin-left: 0px;
+	margin-top: 80px;
 	color: #FFFFFF;
 	background-color: rgba(0,0,0,0.8);
 	width : 600px;
 	brightness: 1.5;
 }
 
+.hidden
+{
+	width: 0px;
+	height: 0px;
+}
+
 .debugger-title
 {
 	background-color: #eb5a0b;
-	padding: 5px 30px;
+	padding: 5px 20px;
 	width: 100%;
 	height: 50px;
 }
@@ -56,7 +62,7 @@
 .debugger-msg-con
 {
 	margin-top: 90px;
-	height: 600px;
+	height: 300px;
 	width: 100%;
 	flow-children: down;
 	overflow: squish scroll; 
@@ -77,7 +83,7 @@
 .debugger-msg
 {
 	width: 100%;
-	background-color: rgba(0,0,0,0.7);
+	background-color: rgba(0,0,0,0.3);
 	padding: 0px 24px;
 	height: 48px;
 	line-height: 39px;
@@ -92,7 +98,7 @@
 
 .debug-error
 {
-	background-color: #da3e3e;
+	background-color: rgba(218, 62, 62, 0.3);
 	border-bottom: 1px solid #FFF;
 }
 
@@ -103,11 +109,36 @@
 
 .debug-event
 {
-	background-color: #0074bd;
+	background-color: rgba(0, 116, 189, 0.4);
 	border-bottom: 1px solid #FFF;
-} 
+}
 
-.filtered-out
+.debugger-root
 {
-	height: 0px;
+	height: 50px;
+	width: 50px;
+	margin-top: 200px;
+}
+
+
+#show-debugger-btn
+{
+	background-color: black;
+	width: 100%;
+	height: 100%;
+	brightness: 1.5;
+}
+
+#show-debugger-btn:hover
+{
+	background-color: #eb5a0b;
+}
+
+#show-debugger-btn Label
+{
+	font-size: 30px;
+	text-align:center;
+	width: 100%;
+	color: white;
+	line-height: 45px;
 }

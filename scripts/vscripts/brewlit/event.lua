@@ -180,6 +180,7 @@ function Event:OnPlayerKilled(func, tbl)
 				player = player,
 				hero = player:GetAssignedHero()
 			}
+			CustomNetTables:SetTableValue( "debug", "log", { logType = "event", msg = "EVENT: Player Killed", t = GameTime:SinceStart() } )
 			func(tbl)
 		end, nil)
 	else

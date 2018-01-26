@@ -7,33 +7,32 @@
 		<include src="file://{resources}/scripts/custom_game/debugger.js" />
   </scripts>
 	
-	<Panel class="debugger-con">
-		<Panel class="debugger-title">
-			<Label text="Brewlit Debugger"/>
-		</Panel>
-		<Panel class="debugger-menu">
-			<Button id="filter-btn" onactivate="filterBy()">
-				<Label text="Filter: All" />
-			</Button>
-			<Button onactivate="showAPI()">
-				<Label text="API" />
-			</Button>
-			<Button onactivate="clearLogs()">
-				<Label text="Clear" />
-			</Button>
-		</Panel>
-		<Panel class="debugger-msg-con" id="debugger-msgs">
-			<Panel class="debugger-msg debug-default">
-				<Label text="Default example 1" />
+	<Panel class="debugger-root">
+		<Button id="show-debugger-btn" class="hidden" onactivate="showDebugger()">
+			<Label text="B"/>
+		</Button>
+		<Panel class="debugger-con" id="debugger">
+			<Panel class="debugger-title">
+				<Label text="Brewlit Debugger"/>
 			</Panel>
-			<Panel class="debugger-msg debug-error">
-				<Label text="Error example" />
+			<Panel class="debugger-menu">
+				<Button id="filter-btn" onactivate="filterToggle()">
+					<Label id="filter-text" text="Filter: All" />
+				</Button>
+				<Button onactivate="showAPI()">
+					<Label text="API" />
+				</Button>
+				<Button onactivate="clearLogs()">
+					<Label text="Clear" />
+				</Button>
+				<Button onactivate="pause()">
+					<Label text="Pause" />
+				</Button>
+				<Button onactivate="closeDebugger()">
+					<Label text="Close" />
+				</Button>
 			</Panel>
-			<Panel class="debugger-msg debug-default">
-				<Label text="Default example 2" />
-			</Panel>
-			<Panel class="debugger-msg debug-event">
-				<Label text="Event example" />
+			<Panel class="debugger-msg-con" id="debugger-msgs">
 			</Panel>
 		</Panel>
 	</Panel>

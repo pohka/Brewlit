@@ -4,9 +4,12 @@ function Brewlit:Start()
 	print("Brewlit:Start()")
 	Setup:Quick(self)
 	GameRules:SetRuneSpawnTime(10)
-	SetPassiveGold(100, 3)
-	
+	--SetPassiveGold(100, 3)
 end
+
+
+
+
 
 --called once every second
 function Brewlit:Update()
@@ -15,9 +18,10 @@ function Brewlit:Update()
 	
 	--GameStateManager:SetVictory("DansGame", 2)
 	--GameRules:SetGameWinner(2)
-	local heroes = Find:Heroes()
-end
 
+	local heroes = Find:Heroes()
+	Brewlit:Log("hello");
+end
 
 
 
@@ -38,9 +42,6 @@ function MinimapEventTest()
 	end
 end
 
-function SetPassiveGold(goldPerTick, tickTime)
-	GameRules:SetGoldPerTick(goldPerTick)
-	GameRules:SetGoldTickTime(tickTime)
-end
+
 
 

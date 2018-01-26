@@ -176,3 +176,9 @@ function Setup:AllRandomHero()
 	end)
 end
 
+--sets the passive gold which players get
+function Setup:SetPassiveGold(goldPerTick, tickTime)
+	GameRules:SetGoldPerTick(goldPerTick)
+	GameRules:SetGoldTickTime(tickTime)
+end
+
