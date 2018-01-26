@@ -6,7 +6,7 @@
 --------
 * Debuger UI
   * filter bug msgs
-Simplify filters 
+* Simplify filters 
   * xp
   * gold
   * runes

@@ -34,18 +34,19 @@
 
 .debugger-menu Button:hover
 {
-	background-color: #eb5a0b;
+	background-color: #CCC;
 }
 
 .debugger-menu Button:hover Label
 {
-	color: #FFF;
+	color: #000;
 }
 
 .debugger-menu Label
 {
 	color: #000;
 	width: 100px;
+	border-right: 1px solid #000;
 	padding: 5px 10px;
 	font-size: 24px;
 	line-height: 30px;
@@ -58,8 +59,20 @@
 	height: 600px;
 	width: 100%;
 	flow-children: down;
+	overflow: squish scroll; 
 }
 
+#filter-btn
+{
+	width: 200px;
+	padding-left: 10px;
+}
+
+#filter-btn Label
+{
+	width: 100%;
+	text-align:left;
+}
 
 .debugger-msg
 {
@@ -83,7 +96,18 @@
 	border-bottom: 1px solid #FFF;
 }
 
-.debug-error Label
+.debug-error Label, .debug-event Label
 {
 	color: #fff;
+}
+
+.debug-event
+{
+	background-color: #0074bd;
+	border-bottom: 1px solid #FFF;
+} 
+
+.filtered-out
+{
+	height: 0px;
 }
