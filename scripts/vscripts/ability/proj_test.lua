@@ -21,6 +21,8 @@ function proj_test:OnSpellStart()
 	})
 	]]
 	
+	--[[
+	--split fire example
 	local angle = 30
 	Ability:ProjectileSplitFire(self, angle, {
 		particle = particle, 
@@ -32,6 +34,22 @@ function proj_test:OnSpellStart()
 		visionRadius = 100,
 		deleteOnHit = true
 	})
+	]]
+	
+	
+	--[[
+	--clock example
+	local ids = Ability:ProjectileClockFire(self, 12, {
+		particle = particle, 
+		direction = info.direction, 
+		speed = projectileSpeed, 
+		distance = 2000, 
+		size = 64, 
+		lifeSpan = 6, 
+		visionRadius = 100,
+		deleteOnHit = true
+	})
+	]]
 end
 
 
