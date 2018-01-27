@@ -22,15 +22,17 @@ require('brewlit/item_manager')
 require('brewlit/helper')
 require('brewlit/find')
 require('brewlit/hud')
+require('brewlit/ability')
 
 _G.debugging = true
 
-function Precache( context )
+function Precache(context)
 	--[[
 		Precache things we know we'll use.  Possible file types include (but not limited to):
 			PrecacheResource( "model", "*.vmdl", context )
 			PrecacheResource( "soundfile", "*.vsndevts", context )
 			PrecacheResource( "particle", "*.vpcf", context )
+			
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
 end
@@ -56,6 +58,11 @@ function Brewlit:Log(msg, logType)
 	end
 	
 	CustomNetTables:SetTableValue("debug", "log", {logType = logType, msg = msg, t = GameTime:SinceStart()})
+end
+
+function Brewlit:LogVector(vec, vecName, logType)
+	local msg = vecName .. ": (" .. string.format("%.1f", vec.x) .. ", " .. string.format("%.1f", vec.x) .. ", " .. string.format("%.1f", vec.x) .. ")"
+	Brewlit:Log(msg, logType)
 end
 
 --Callback function for commands issued by the user from the debugger

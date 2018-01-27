@@ -3,78 +3,16 @@
 {
 	"Version"		"1"
 	
-	"fall_lua"
+	"proj_test"
 	{
 		"BaseClass"				 "ability_lua"
-		"ScriptFile"			 "abils/fall_lua"
+		"ScriptFile"			 "ability/proj_test"
 		
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT"
 		"Level"                  "1"
 		"MaxLevel"               "1"
-		
-	}
-	
-	"pudge_meat_hook_vt_lua"
-	{
-		"BaseClass"				 "ability_lua"
-		"ScriptFile"			 "abils/pudge_meat_hook_vt_lua"
-		//"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityTextureName"	"pudge_meat_hook"
-	}
-	
-	"jump_lua"
-	{
-		"BaseClass"				 "ability_lua"
-		"ScriptFile"			 "abils/jump_lua"
-		
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"Level"                  "1"
-		"MaxLevel"               "1"
-	}
-	
-	"dummy_lua"
-	{
-		"BaseClass"				 "ability_lua"
-		"ScriptFile"			 "abils/dummy_lua"
-		
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"Level"                  "1"
-		"MaxLevel"               "1"
-	}
-	
-	"speed_lua"
-	{
-		"BaseClass"				 "ability_lua"
-		"ScriptFile"			 "abils/speed_lua"
-		
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"Level"                  "1"
-		"MaxLevel"               "1"
-	}
-	
-	"dummy_teleport_lua"
-	{
-		"BaseClass"				 "ability_lua"
-		"ScriptFile"			 "abils/dummy_teleport_lua"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_ALL"
-		"AbilityUnitTargetFlags" "DOTA_UNIT_TARGET_FLAG_NONE"
-		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"Level"                  "1"
-		"MaxLevel"               "1"
-	}
-	
-	"center_cam_lua"
-	{
-		"BaseClass"				 "ability_lua"
-		"ScriptFile"			 "abils/center_cam_lua"
-		
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_ALL"
-		"AbilityUnitTargetFlags" "DOTA_UNIT_TARGET_FLAG_NONE"
-		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"Level"                  "1"
-		"MaxLevel"               "1"
+		"precache" {
+				"particle" ""particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf""
+		}
 	}
 }

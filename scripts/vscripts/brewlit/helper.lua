@@ -43,3 +43,12 @@ function Helper:PrintTable(tbl)
 			print(k .. ": " .. vType)
 		end)
 end
+
+function Helper:VectorRotate2D(vec, degrees)
+	local radians = degrees * (math.pi/180)
+	local dCos = math.cos(radians)
+	local dSin = math.sin(radians)
+	local x = vec.x * dCos - vec.y * dSin;
+	local y = vec.x * dSin + vec.y * dCos;
+	return Vector(x,y,vec.z)
+end

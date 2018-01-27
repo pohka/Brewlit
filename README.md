@@ -5,7 +5,9 @@
  Road Map
 --------
 * Debuger UI
-  * filter bug msgs
+  * API
+  * option to start opened
+  * bug with logging multiple msgs at once
 * Simplify filters 
   * xp
   * gold
@@ -18,7 +20,7 @@
   * modifer gained
 * GameMode mangement
   * custom states
-  * round
+  * rounds
   * custom clock
 * Animations
 * Projectiles
@@ -31,9 +33,8 @@
   * preset angles (Side, topdown, forward follow)
   * smoothing transitions
   * zoom
-  * camera dummies for changing angling
-* Component based UI (QuasJS)
-  * Display UI to certain users
+  * camera dummies for changing angles
+* UI library
 * Cosmetics
 * Physics
 

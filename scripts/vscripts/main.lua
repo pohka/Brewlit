@@ -18,9 +18,7 @@ function Brewlit:Update()
 	
 	--GameStateManager:SetVictory("DansGame", 2)
 	--GameRules:SetGameWinner(2)
-
 	local heroes = Find:Heroes()
-	Brewlit:Log("hello");
 end
 
 
