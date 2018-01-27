@@ -4,7 +4,7 @@ if Ability == nil then
 end
 
 --returns a table of useful variables to use with OnSpellStart
---table: caster, target, point, direction
+--table: caster, target, point, direction, casterForward
 function Ability:GetCastingInfo(ability)
 	local caster = ability:GetCaster()
 	local target = ability:GetCursorTarget()
@@ -22,7 +22,8 @@ function Ability:GetCastingInfo(ability)
 		caster = caster,
 		target = target,
 		point = point,
-		direction = direction
+		direction = direction,
+		casterForward = forward
 	}
 end
 
@@ -58,27 +59,129 @@ end
 
 --creates and projectile and returns the projectile ID
 function Ability:ProjectileFire(ability, info)
-	local caster = ability:GetCaster()
-	local pInfo = 
-	{
-		Ability = info.ability,
-		EffectName = info.particle,
-		vSpawnOrigin = caster:GetAbsOrigin(),
-		fDistance = info.distance,
-		fStartRadius = info.size,
-		fEndRadius = info.size,
-		Source = caster,
-		bHasFrontalCone = false,
-		bReplaceExisting = false,
-		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
-		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-        fExpireTime = GameRules:GetGameTime() + info.lifeSpan,
-		bDeleteOnHit = info.deleteOnHit,
-		vVelocity = info.direction * info.speed,
-		bProvidesVision = true,
-		iVisionRadius = info.visionRadius,
-		iVisionTeamNumber = caster:GetTeamNumber()
-	}
+	local pInfo = Ability:ConvertInfoToProjectileTable(ability, info)
 	return ProjectileManager:CreateLinearProjectile(pInfo)
+end
+
+--[[
+converts a brewlit projectile table to the standard Valve projectile tables
+Table:
+	Required keys:
+		particle,		--particle effect (.vpcf)
+		direction,		--direction vector
+		speed,			--speed of the projectile
+		distance		--max distance of the projectile
+		
+	Optional keys:
+		spawnOrigin	
+		size 			--sets both the start and end radius of the hitbox
+		startSize		--starting size of the hitbox
+		endSize			--ending size of the hitbox
+		hasCone			--if true the hitbox will have a cone at the front
+		replaceExisting	--replaces existing projectiles (probably doesn't work)
+		targetTeam		--the target team (DOTA_UNIT_TARGET_TEAM)
+		targetFlags		--the target flags (DOTA_UNIT_TARGET_FLAGS)
+		targetType		--the type of units which this projectile can effect (DOTA_UNIT_TARGET_TYPE)
+		lifeSpan		--the max life span of the projectile
+		givesVision		--if true the projectile will give vision
+		visionRadius	--the radius of the vision
+		visionTeamNum	--the team which gets the vision
+		
+
+	Default values if optional keys are nil or not set:
+		distance = 2000,
+		spawnOrigin = caster:GetAbsOrigin(),
+		size = 64,
+		hasCone = false,
+		replaceExisting = false,
+		targetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		targetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+		targetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		lifeSpan = 5,
+		givesVision = false,
+		visionRadius = 0,
+		visionTeamNum = caster:GetTeamNumber()
+	})
+]]
+function Ability:ConvertInfoToProjectileTable(ability, info)
+	local caster = ability:GetCaster()
+	
+	--minimum info
+	local pInfo = {
+		Ability = ability,
+		EffectName = info.particle,
+		vVelocity = info.direction * info.speed,
+		fDistance = info.distance,
+		Source = caster
+	}
+	
+	--spawn point of the projectile
+	pInfo["vSpawnOrigin"] = ConvertHelp(info.spawnOrigin, caster:GetAbsOrigin())
+	
+	--size of the hit box
+	if info.size ~= nil then
+		pInfo["fStartRadius"] = info.size
+		pInfo["fEndRadius"] = info.size
+	end
+	
+	--starting size of the hitbox
+	if info.startSize ~= nil then
+		pInfo["fStartRadius"] = info.startSize
+	elseif pInfo["fStartRadius"] == nil then
+		pInfo["fStartRadius"] = 64
+	end
+	
+	--ending size of the hitbox
+	if info.endSize ~= nil then
+		pInfo["fEndRadius"] = info.endSize
+	elseif pInfo["fEndRadius"] == nil then
+		pInfo["fEndRadius"] = 64
+	end
+	
+	--if the projectile hitbox has a cone at the front
+	pInfo["bHasFrontalCone"] = ConvertHelp(info.hasCone, false)
+	
+	--replaces existing projectiles
+	pInfo["bReplaceExisting"] = ConvertHelp(info.replaceExisting, false)
+	
+	--the team to target
+	pInfo["iUnitTargetTeam"] = ConvertHelp(info.targetTeam, DOTA_UNIT_TARGET_TEAM_ENEMY)
+	
+	--flags for targeting DOTA_UNIT_TARGET_FLAGS
+	pInfo["iUnitTargetFlags"] = ConvertHelp(info.targetFlags, DOTA_UNIT_TARGET_FLAG_NONE)
+	
+	--unit type of the target
+	pInfo["iUnitTargetType"] = ConvertHelp(info.targetType, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC)
+	
+	--the game time which the projectile should be deleted
+	pInfo["fExpireTime"] = ConvertHelp(info.lifeSpan,  5)
+	pInfo["fExpireTime"] = pInfo["fExpireTime"] + GameRules:GetGameTime()
+	
+	--projectile gives vision
+	if info.givesVision ~= nil and info.givesVision == true and info.visionRadius > 0 then
+		pInfo["bProvidesVision"] = true
+	else
+		pInfo["bProvidesVision"] = false
+	end
+	
+	--radius of the vision
+	if info.visionRadius ~= nil and info.visionRadius > 0 then
+		pInfo["iVisionRadius"] = info.visionRadius
+	else
+		pInfo["iVisionRadius"] = 0
+	end
+	
+	--which team is given the vision
+	pInfo["iVisionTeamNumber"] = ConvertHelp(info.visionTeamNum, caster:GetTeamNumber())
+	
+	return pInfo
+end
+
+--returns value if it is not nil, otherwise it returns defaultValue
+function ConvertHelp(value, defaultValue)
+	if value ~= nil then
+		return value
+	else
+		return defaultValue
+	end
 end
