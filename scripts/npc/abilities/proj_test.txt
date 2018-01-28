@@ -1,0 +1,15 @@
+"DOTAAbilities"
+{
+	"proj_test"
+	{
+		"BaseClass"				 "ability_lua"
+		"ScriptFile"			 "ability/proj_test"
+		
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT"
+		"Level"                  "1"
+		"MaxLevel"               "1"
+		"precache" {
+				"particle" ""particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf""
+		}
+	}
+}

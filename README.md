@@ -8,6 +8,9 @@
   * API
   * option to start opened
   * bug with logging multiple msgs at once
+* Find
+  * units with modifier
+* Quest System
 * Simplify filters 
   * xp
   * gold
@@ -23,6 +26,12 @@
   * rounds
   * custom clock
 * Animations
+* Ability
+  * set same abilities for every player
+  * charges
+  * tracking projectiles
+  * changing projectiles direction
+  * spiral/arc projectiles
 * Projectiles
 * AI
   * state
@@ -35,8 +44,18 @@
   * zoom
   * camera dummies for changing angles
 * UI library
+  * drop downs
+  * checkboxes
+  * dragging and dropping
+* UI
+  * Custom chat
+  * overlays for minimap
+  * overlay for new round
+  * help/info
 * Cosmetics
 * Physics
+* Clock
+  * delay function call
 
 Future
 ------------
