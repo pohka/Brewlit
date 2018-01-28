@@ -27,6 +27,7 @@ function Helper:ConvertTableToStartAtZero(tbl)
 	return tbl
 end
 
+--returns the key where the value matches a value in the table. returns nil if not found
 function Helper:TableIndexOf(tbl, value)
 	for k,v in pairs(tbl) do
 		if v == value then

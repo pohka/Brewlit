@@ -45,11 +45,12 @@ function proj_test:OnProjectileHit(hTarget, vLocation)
 	local destroyOnHit = true;
 	
 	if hTarget ~= nil then
-		print("hit")
+		--projectile hit a target
 		
 		return destroyOnHit
 	else
-		print("ended")
+		--projectile reached its max distance
+		
 		return true
 	end
 end

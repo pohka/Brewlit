@@ -247,5 +247,62 @@ function Ability:ClearAbilities(unit)
 	end
 end
 
+--[[
+refreshes all items and abilities for a unit
+
+if refreshAbilities, refreshInventory, refreshBackpack, refreshStash and refeshDriooeditem
+is nil or not defined then this function will refresh them
+if these values are false it wont refresh them
+only effects items in inventory and stash
+]]
+function Ability:RefreshAll(unit, refreshAbilities, refreshInventory, refreshBackpack, refreshStash, refreshDroppedItems)
+	--refreshes the abilities
+	if refreshAbilities == nil or refreshAbilities then
+		for i=0, unit:GetAbilityCount()-1 do
+			local abil = unit:GetAbilityByIndex(i)
+			if abil ~= nil then
+				abil:EndCooldown()
+			end
+		end
+	end
+	
+	--refresh the inventory
+	if refreshInventory == nil or refreshInventory then
+		for i=DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_6 do
+			local item = unit:GetItemInSlot(i)
+			if item ~= nil then
+				item:EndCooldown()
+			end
+		end
+	end
+	
+	--refresh all of the backpack
+	if refreshBackpack == nil or refreshBackpack then
+		for i=DOTA_ITEM_SLOT_7, DOTA_ITEM_SLOT_9 do
+			local item = unit:GetItemInSlot(i)
+			if item ~= nil then
+				item:EndCooldown()
+			end
+		end
+	end
+	
+	--refresh all the stash
+	if refreshStash == nil or refreshStash then
+		for i=DOTA_STASH_SLOT_1, DOTA_STASH_SLOT_6 do
+			local item = unit:GetItemInSlot(i)
+			if item ~= nil then
+				item:EndCooldown()
+			end
+		end
+	end
+	
+	--refresh all of the dropped items
+	if refreshDroppedItems == nil or refreshDroppedItems then
+		local items = ItemManager:GetDroppedItems()
+		for _,item in pairs(items) do
+			item:GetContainedItem():EndCooldown()
+		end
+	end
+end
 
 
