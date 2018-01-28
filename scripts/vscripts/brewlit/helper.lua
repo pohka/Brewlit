@@ -39,12 +39,20 @@ end
 
 --prints the key and the type of each variable in the table
 function Helper:PrintTable(tbl)
+	if tbl == nil then
+		print("table is nil")
+		return
+	end
 	table.foreach(tbl, 
 		function(k,v)
 			local vType
 			
 			if type(v) == "table" then
-				vType = v:GetClassname()
+				if v.GetClassname ~= nil then
+					vType = v:GetClassname()
+				else
+					vType = "table"
+				end
 			else
 				vType = type(v)
 			end

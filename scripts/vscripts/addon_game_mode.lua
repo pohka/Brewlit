@@ -23,6 +23,7 @@ require('brewlit/helper')
 require('brewlit/find')
 require('brewlit/hud')
 require('brewlit/ability')
+require('brewlit/task')
 
 _G.debugging = true
 
@@ -45,14 +46,29 @@ end
 
 function BrewlitGameMode:InitGameMode()
 	ListenToGameEvent("game_rules_state_change", GameStateManager.OnChangeState, nil)
+	
+	--listen to commands form the HUD
 	CustomGameEventManager:RegisterListener("debug", DebuggerCommand)
+	
+	--start scripting
 	Brewlit:Start()
+	
+	--create listener for same abilities mode when units spawn
 	Event:OnUnitSpawned(
 		function(event)
 			Ability:UseSameAbilities(event.unit)
 		end)
+	
+	--initalize GameStateManager
 	GameStateManager:Init()
 	
+	--initalize task updating
+	local gameMode = GameRules:GetGameModeEntity()
+	gameMode:SetContextThink("Tasks", Task.update, 0.03)
+end
+
+function clockTest()
+	print("testing")
 end
 
 --Logs a message to the debugger

@@ -8,7 +8,13 @@ function Brewlit:Start()
 	
 	Ability.sameAbilityMode = true
 	Ability.abilityList = {"proj_test"}
+	
+	
+	local id = Task:Interval(test2, 1, nil)
+	Task:Delay(test, 5, {id})
 end
+
+
 
 
 
@@ -19,9 +25,18 @@ function Brewlit:Update()
 	
 	--GameStateManager:SetVictory("DansGame", 2)
 	--GameRules:SetGameWinner(2)
+	
 	local heroes = Find:Heroes()
 end
 
+function test(tbl)
+	Task:Interupt(tbl[1])
+	print("interupted")
+end
+
+function test2()
+	print("i am interval")
+end
 
 
 

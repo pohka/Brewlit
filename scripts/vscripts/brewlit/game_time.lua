@@ -29,7 +29,7 @@ Table:
  * isDayTime (bool) : true if is day time
  * timePercent (float) : 0-1 value with the percentage of the day or night, 0.75 means 3/4 of the way through the day/night 
 ]]
-function GameTime:GetDayCycle()
+function GameTime:GetDayCycleInfo()
 	local isDay = GameTime:IsDayTime()
 	local t = GameTime:OfDay()
 	
