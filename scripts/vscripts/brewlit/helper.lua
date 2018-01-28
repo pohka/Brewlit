@@ -61,6 +61,41 @@ function Helper:PrintTable(tbl)
 		end)
 end
 
+
+--returns an indexed table of the player ids of every player
+function Helper:GetAllPlayerIDs()
+	local tbl = {}
+	for teamNum,teamInfo in pairs(Setup.teamTable) do
+		local count = PlayerResource:GetPlayerCountForTeam(teamNum)
+		for i=0, count do
+			local id = PlayerResource:GetNthPlayerIDOnTeam(teamNum, i)
+			if id ~= nil then
+				table.insert(tbl, id)
+			end
+		end
+	end
+	return Helper:ConvertTableToStartAtZero(tbl)
+end
+
+
+--returns an index table of all the player
+function Helper:GetAllPlayers()
+	local tbl = {}
+	for teamNum,teamInfo in pairs(Setup.teamTable) do
+		local count = PlayerResource:GetPlayerCountForTeam(teamNum)
+		for i=0, count do
+			local id = PlayerResource:GetNthPlayerIDOnTeam(teamNum, i)
+			local player = PlayerResource:GetPlayer(id)
+			if player ~= nil then
+				table.insert(tbl, player)
+			end
+		end
+	end
+	return Helper:ConvertTableToStartAtZero(tbl)
+end
+
+
+--rotates a vector around the world up axis
 function Helper:VectorRotate2D(vec, degrees)
 	local radians = degrees * (math.pi/180)
 	local dCos = math.cos(radians)

@@ -31,7 +31,6 @@
   * tracking projectiles
   * changing projectiles direction
   * spiral/arc projectiles
-* Projectiles
 * AI
   * state
   *  state transitions
@@ -53,8 +52,6 @@
   * help/info
 * Cosmetics
 * Physics
-* Clock
-  * delay function call
 
 Future
 ------------

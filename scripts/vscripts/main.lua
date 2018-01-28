@@ -12,6 +12,7 @@ function Brewlit:Start()
 	
 	local id = Task:Interval(test2, 1, nil)
 	Task:Delay(test, 5, {id})
+	Camera:FocusHeroOnRespawn()
 end
 
 
@@ -20,6 +21,11 @@ end
 
 --called once every second
 function Brewlit:Update()
+	--[[
+	if Camera:AllPlayersHaveTarget() then
+		Camera:LockAllCamerasToHero()
+	end
+	]]
 	--local heroes = Query:GetTrees()
 	--Helper:PrintTable(heroes)
 	

@@ -24,6 +24,7 @@ require('brewlit/find')
 require('brewlit/hud')
 require('brewlit/ability')
 require('brewlit/task')
+require('brewlit/camera')
 
 _G.debugging = true
 
