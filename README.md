@@ -27,7 +27,6 @@
   * custom clock
 * Animations
 * Ability
-  * set same abilities for every player
   * charges
   * tracking projectiles
   * changing projectiles direction

@@ -3,6 +3,15 @@ if Ability == nil then
 	Ability = class ({})
 end
 
+--set to true to enable all heroes with the same ability
+Ability.sameAbilityMode = false
+
+--same ability mode only effects heroes
+Ability.sameAbilityModeIsHeroOnly = true
+
+--the list of ability names which all heroes will have if same ability mode is enabled
+Ability.abilityList = {}
+
 --returns a table of useful variables to use with OnSpellStart
 --table: caster, target, point, direction, casterForward
 function Ability:GetCastingInfo(ability)
@@ -185,3 +194,58 @@ function ConvertHelp(value, defaultValue)
 		return defaultValue
 	end
 end
+
+--sets the units abilties to match the Ability.abilityList table.
+--if sameAbilityModeIsHeroOnly is true then this function will only modify abilities on heroes
+--default callback function for the gamemode which is called OnUnitSpawned
+function Ability:UseSameAbilities(unit)
+	if Ability.sameAbilityModeIsHeroOnly and unit:IsHero() then
+		if Ability.sameAbilityMode then
+			removeIfNotInAbilityList(unit)
+			
+			--add abilities if they dont exist
+			local abilCount = table.getn(Ability.abilityList)
+			for _,abilName in pairs(Ability.abilityList) do
+					if unit:HasAbility(abilName) == false then
+						unit:AddAbility(abilName)
+				end
+			end
+		end
+	end
+end
+
+--removes all abilities not in the abilityList from the unit
+function removeIfNotInAbilityList(unit)
+	for i=0, unit:GetAbilityCount()-1 do
+		local abil = unit:GetAbilityByIndex(i)
+		if abil ~= nil then
+			local name = abil:GetAbilityName()
+			if Helper:TableIndexOf(Ability.abilityList, name) == nil then
+				print("index:" .. Helper:TableIndexOf(Ability.abilityList, name))
+				unit:RemoveAbility(name)
+			end
+		end
+	end
+end
+
+--gives every hero this ability
+function Ability:GiveAllHeroesAbility(name)
+	table.foreach(Find:GetHeroes(), 
+		function(i,hero)
+			hero:AddAbility(name)
+		end)
+end
+
+--removed all abilities from this unit
+function Ability:ClearAbilities(unit)
+	for i=0, unit:GetAbilityCount() do
+		local abil = unit:GetAbilityByIndex(i)
+		if abil ~= nil then
+			local name = abil:GetAbilityName()
+			unit:RemoveAbility(name)
+		end
+	end
+end
+
+
+

@@ -27,6 +27,14 @@ function Helper:ConvertTableToStartAtZero(tbl)
 	return tbl
 end
 
+function Helper:TableIndexOf(tbl, value)
+	for k,v in pairs(tbl) do
+		if v == value then
+			return k
+		end
+	end
+end
+
 
 --prints the key and the type of each variable in the table
 function Helper:PrintTable(tbl)

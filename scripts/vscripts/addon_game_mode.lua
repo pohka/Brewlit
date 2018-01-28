@@ -47,6 +47,10 @@ function BrewlitGameMode:InitGameMode()
 	ListenToGameEvent("game_rules_state_change", GameStateManager.OnChangeState, nil)
 	CustomGameEventManager:RegisterListener("debug", DebuggerCommand)
 	Brewlit:Start()
+	Event:OnUnitSpawned(
+		function(event)
+			Ability:UseSameAbilities(event.unit)
+		end)
 	GameStateManager:Init()
 	
 end

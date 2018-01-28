@@ -5,9 +5,10 @@ function Brewlit:Start()
 	Setup:Quick(self)
 	GameRules:SetRuneSpawnTime(10)
 	--SetPassiveGold(100, 3)
+	
+	Ability.sameAbilityMode = true
+	Ability.abilityList = {"proj_test"}
 end
-
-
 
 
 
