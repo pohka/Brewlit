@@ -1,6 +1,7 @@
 var currentFilter = "all"; //current log filter type
 var filterOptions = ["all", "default", "error", "event"]; //different log filter options
 var logTable = [] //all the logs in a table of json objects
+var maxLogs = 30;
 
 //clears the logTable
 function clearLogs()
@@ -13,6 +14,9 @@ function clearLogs()
 function log(msg, type)
 {
 	logTable.unshift({"msg" : msg, "type" : type});
+	while(logTable.length >= maxLogs){
+		logTable.splice(-1,1);
+	}
 	refreshLogs();
 }
 

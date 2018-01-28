@@ -1,5 +1,7 @@
 <root>
-	<scripts></scripts>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/camera.js" />
+	</scripts>
 	<script></script>
 	 
 	 

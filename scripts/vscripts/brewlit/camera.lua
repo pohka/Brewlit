@@ -63,6 +63,7 @@ function Camera:FocusHeroOnRespawn()
 		end)
 end
 
+
 --locks a player camera to their hero
 function Camera:LockPlayerCameraToHero(playerID)
 	local player = PlayerResource:GetPlayer(playerID)
@@ -73,6 +74,7 @@ function Camera:LockPlayerCameraToHero(playerID)
 	end
 end
 
+
 --unlocks a players camera from following an entity
 function Camera:UnlockPlayerCamera(playerID)
 	if playerID ~= nil then
@@ -80,6 +82,13 @@ function Camera:UnlockPlayerCamera(playerID)
 		currentTargets[playerID] = nil
 	end
 end
+
+function Camera:SetRotation()
+	local keyName = "test"
+	local yaw = 20
+	CustomNetTables:SetTableValue("camera", keyName, { yaw = yaw })
+end
+
 
 --returns a table of all the current camera targets for each player
 --the keys to the table is the players id
