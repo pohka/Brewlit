@@ -114,7 +114,7 @@ end
 
 
 --you can listen to particular state changes using listener functions called from GameStateManager
-function Event:OnStateInProgress()
+function GameState:OnStateInProgress()
 	Camera:GlobalLock()
 	Camera:MoveGlobalTo(Vector(1000,300,-400))
 	Camera:MoveGlobalTo(Vector(0, -600,0), true, 5)

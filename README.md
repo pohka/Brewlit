@@ -7,7 +7,7 @@
 * Debuger UI
   * API
   * option to start opened
-  * bug with logging multiple msgs at once
+  * fix bug with logging multiple msgs at once
 * Find
   * units with modifier
 * Quest System
@@ -38,7 +38,10 @@
   * events
   * queue commands (such as path finding)
 * Camera
-  * more camera presets (forward follow, smooth forward follow, rotate with scroll wheel)
+  * more camera presets
+    * forward follow
+	* smooth forward follow
+	* rotate with scroll wheel
 * UI library
   * drop downs
   * checkboxes
@@ -51,7 +54,3 @@
 * Cosmetics
 * Physics
 
-Future
-------------
-* net_tables generation
-* precache generation

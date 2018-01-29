@@ -1,6 +1,6 @@
 --managing changes in the game state
 if GameStateManager == nil then
-	GameStateManager = class ({})
+	_G.GameStateManager = class ({})
 end
 
 settings = {
@@ -41,40 +41,40 @@ end
 calls the listener function for the current state if it exists
 
 Listener functions:
-Event:OnStateCustomGameSetup()
-Event:OnStateHeroSelection()
-Event:OnStateStrategyTime()
-Event:OnStateTeamShowcase()
-Event:OnStatePreGame()
-Event:OnStateInProgress()
-Event:OnStatePostGame()
-Event:OnStateGameDisconnect()
+GameState:OnStateCustomGameSetup()
+GameState:OnStateHeroSelection()
+GameState:OnStateStrategyTime()
+GameState:OnStateTeamShowcase()
+GameState:OnStatePreGame()
+GameState:OnStateInProgress()
+GameState:OnStatePostGame()
+GameState:OnStateGameDisconnect()
 ]]
 function BroadcastStateChange(curState)
 
-	if curState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP and Event.OnStateCustomGameSetup ~= nil then
-		Event:OnStateCustomGameSetup()
+	if curState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP and GameState.OnStateCustomGameSetup ~= nil then
+		GameState:OnStateCustomGameSetup()
 		
-	elseif curState == DOTA_GAMERULES_STATE_PRE_GAME and Event.OnStateHeroSelection ~= nil then
-		Event:OnStateHeroSelection()
+	elseif curState == DOTA_GAMERULES_STATE_PRE_GAME and GameState.OnStateHeroSelection ~= nil then
+		GameState:OnStateHeroSelection()
 		
-	elseif curState == DOTA_GAMERULES_STATE_STRATEGY_TIME and Event.OnStateStrategyTime ~= nil then
-		Event:OnStateStrategyTime()
+	elseif curState == DOTA_GAMERULES_STATE_STRATEGY_TIME and GameState.OnStateStrategyTime ~= nil then
+		GameState:OnStateStrategyTime()
 		
-	elseif curState == DOTA_GAMERULES_STATE_TEAM_SHOWCASE and Event.OnStateTeamShowcase ~= nil then
-		Event:OnStateTeamShowcase()
+	elseif curState == DOTA_GAMERULES_STATE_TEAM_SHOWCASE and GameState.OnStateTeamShowcase ~= nil then
+		GameState:OnStateTeamShowcase()
 		
-	elseif curState == DOTA_GAMERULES_STATE_PRE_GAME and Event.OnStatePreGame ~= nil then
-		Event:OnStatePreGame()
+	elseif curState == DOTA_GAMERULES_STATE_PRE_GAME and GameState.OnStatePreGame ~= nil then
+		GameState:OnStatePreGame()
 		
-	elseif curState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS and Event.OnStateInProgress ~= nil then
-		Event:OnStateInProgress()
+	elseif curState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS and GameState.OnStateInProgress ~= nil then
+		GameState:OnStateInProgress()
 		
-	elseif curState == DOTA_GAMERULES_STATE_POST_GAME and Event.OnStatePostGame ~= nil then
-		Event:OnStatePostGame()
+	elseif curState == DOTA_GAMERULES_STATE_POST_GAME and GameState.OnStatePostGame ~= nil then
+		GameState:OnStatePostGame()
 		
-	elseif curState == DOTA_GAMERULES_STATE_DISCONNECT and Event.OnStateGameDisconnect ~= nil then
-		Event:OnStateGameDisconnect()
+	elseif curState == DOTA_GAMERULES_STATE_DISCONNECT and GameState.OnStateGameDisconnect ~= nil then
+		GameState:OnStateGameDisconnect()
 	end
 end
 

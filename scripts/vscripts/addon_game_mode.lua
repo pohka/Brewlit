@@ -8,8 +8,14 @@ if Brewlit == nil then
 	_G.Brewlit = class ({})
 end
 
+--used for built-in engine events
 if Event == nil then
 	_G.Event = class ({})
+end
+
+--used for game state events
+if GameState == nil then
+	_G.GameState = class ({})
 end
 
 require('main')

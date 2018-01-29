@@ -15,7 +15,7 @@ input.cursor_y : cursor vertical position (value from -1 to 1 and zero is center
 
 Note: To remove/change direction input keys change addoninfo.txt. There is a sample for WASD directional input
 
-this calls Brewlit.OnInput() if it exists
+this calls Brewlit.OnInput() if it exists with the input which is currently been listened to
 ]]
 function Input:Update(input)
 	if input.playerid ~= -1 then
@@ -25,10 +25,12 @@ function Input:Update(input)
 	end
 end
 
+--enable/disable listening to direction input
 function Input:ListenToDirectionalInput(enabled)
 	CustomNetTables:SetTableValue("input", "directional", { enabled = enabled })
 end
 
+--enable/disable listening to the cursor position
 function Input:ListenToCursorInput(enabled)
 	CustomNetTables:SetTableValue("input", "cursor", { enabled = enabled })
 end
