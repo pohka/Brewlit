@@ -3,6 +3,8 @@
         custom_net_tables =
     [
         "game",
-		"debug"
+		"debug",
+		"camera",
+		"camera_type"
     ]
 }

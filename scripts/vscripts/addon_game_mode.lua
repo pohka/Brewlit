@@ -81,6 +81,7 @@ function Brewlit:Log(msg, logType)
 	CustomNetTables:SetTableValue("debug", "log", {logType = logType, msg = msg, t = GameTime:SinceStart()})
 end
 
+--logs a vector into the debugger
 function Brewlit:LogVector(vec, vecName, logType)
 	local msg = vecName .. ": (" .. string.format("%.1f", vec.x) .. ", " .. string.format("%.1f", vec.x) .. ", " .. string.format("%.1f", vec.x) .. ")"
 	Brewlit:Log(msg, logType)

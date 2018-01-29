@@ -37,10 +37,10 @@
   * events
   * queue commands (such as path finding)
 * Camera
-  * preset angles (Side, topdown, forward follow)
+  * preset angles (forward follow)
   * smoothing transitions
-  * zoom
   * camera dummies for changing angles
+  * camera shake
 * UI library
   * drop downs
   * checkboxes

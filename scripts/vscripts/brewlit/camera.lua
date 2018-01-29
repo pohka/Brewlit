@@ -83,10 +83,41 @@ function Camera:UnlockPlayerCamera(playerID)
 	end
 end
 
-function Camera:SetRotation()
-	local keyName = "test"
-	local yaw = 20
-	CustomNetTables:SetTableValue("camera", keyName, { yaw = yaw })
+--sets the same camera type for all players
+function Camera:SetCameraTypeAllPlayers(camType)
+	local players = Helper:GetAllPlayerIDs()
+	for _,playerID in pairs(players) do
+		Camera:SetCameraType(playerID, camType)
+	end
+end
+
+--[[
+set the camera to one of the presets
+
+presets:
+ -top				top down view
+ -front				front view
+ -third_person      3rd person
+ -third_person_alt  alternative version to 3rd person which is higher
+ -default			default dota camera
+ -inverted			rotate the camera around 180 degrees
+ -right				view from the right side
+ -left				view from the left side
+]]
+function Camera:SetCameraType(playerID, camType)
+	CustomNetTables:SetTableValue("camera_type", ""..playerID, { camType = camType })
+end
+
+--[[
+sets the values for the camera, if a value is nil this function won't change the value on the camera
+
+--yaw is the rotation of the camera around the world up axis
+--zoom is the distance of the camera from focus point
+--height is the offset height of the camera
+--pitch is the rotation of the camera along the y-axis
+]]
+function Camera:UpdateSettings(playerID, yaw, zoom, height, pitch)
+	CustomNetTables:SetTableValue("camera", ""..playerID, { yaw = yaw, zoom = zoom, height = height, pitch = pitch })
 end
 
 

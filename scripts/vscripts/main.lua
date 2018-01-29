@@ -12,11 +12,49 @@ function Brewlit:Start()
 	
 	local id = Task:Interval(test2, 1, nil)
 	Task:Delay(test, 5, {id})
-	--Camera:FocusHeroOnRespawn()
+	Camera:FocusHeroOnRespawn()
+	
+	Task:Interval(camTest, 0.03)
+	Camera:SetCameraTypeAllPlayers("right")
 end
 
 
 
+
+local yaw = 0
+local zoom = 1000
+local zoomChange = -10
+local pitch = 60
+local pitchChange = 4
+function camTest()
+	yaw = yaw + 5
+	if zoom > 800 then
+		zoom = 8000
+		zoomChange = -zoomChange
+	elseif zoom < 600 then
+		zoom = 600
+		zoomChange = -zoomChange
+	end
+	
+	zoom = zoom - zoomChange
+	
+	--[[
+	if pitch > 170 then
+		pitch = 170
+		pitchChange = -pitchChange
+	elseif pitch < 10 then
+		pitch = 10
+		pitchChange = -pitchChange
+	end
+	]]
+	
+	pitch = pitch + pitchChange
+	
+	local playerIDs = Helper:GetAllPlayerIDs()
+	for _,playerID in pairs(playerIDs) do
+		Camera:UpdateSettings(playerID, yaw, 300, 300, pitch)
+	end
+end
 
 
 --called once every second
@@ -25,6 +63,8 @@ function Brewlit:Update()
 	if Camera:AllPlayersHaveTarget() == false then
 		Camera:LockAllCamerasToHero()
 	end
+	
+	
 	
 	--local heroes = Query:GetTrees()
 	--Helper:PrintTable(heroes)
