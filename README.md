@@ -38,9 +38,7 @@
   * events
   * queue commands (such as path finding)
 * Camera
-  * dummy positioning (forward follow, smooth forward follow)
-  * lerp
-  * global dummy
+  * more camera presets (forward follow, smooth forward follow, rotate with scroll wheel)
 * UI library
   * drop downs
   * checkboxes

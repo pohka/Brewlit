@@ -16,6 +16,7 @@ end
 currentTargets = {}
 
 cameraDummies = {}
+local globalCameraDummy
 
 --locks the camera for each player to follow their hero
 function Camera:LockAllCamerasToHero()
@@ -125,15 +126,21 @@ function Camera:UpdateSettings(playerID, yaw, zoom, height, pitch)
 end
 
 
---returns a table of all the current camera targets for each player
+--returns a table of all the current camera target positions for each player
 --the keys to the table is the players id
---if the target is nil then the camera is not following any entity
+--if the target is nil then the camera is not locked to any entity
+--not the z-axis of the target is not the same as the camera height
 function Camera:GetCurrentTargets()
-	return currentTargets
+	local tbl = {}
+	for playerID,target in pairs(currentTargets)
+		tbl[playerID] = target:GetOrigin()
+	end
+	return tbl
 end
 
 
 --sets the camera to focus a point
+--it does this by moving and locking the camera to the dummy unti and then releasing the camera lock 0.1s later
 function Camera:FocusPoint(playerID, point)
 	createDummyIfNotExisting(playerID)
 	local player = PlayerResource:GetPlayer(playerID)
@@ -153,12 +160,17 @@ end
 
 --creates camera dummy for player if it doesn't exist
 function createDummyIfNotExisting(playerID)
-	local player = PlayerResource:GetPlayer(playerID)
-	if player~=nil and cameraDummies[playerID] == nil then
-		local dummy = CreateUnitByName("camera_dummy", Vector(0,0,0), false, nil, nil, player:GetTeamNumber())
+	if playerID == 65 then
+		local dummy = CreateUnitByName("camera_dummy", Vector(0,0,0), false, nil, nil, 2)
 		dummy:AddNewModifier(dummy, nil, "dummy_modifier", {})
-		cameraDummies[playerID] = dummy
-		print("created dummy")
+		cameraDummies["global"] = dummy
+	else
+		local player = PlayerResource:GetPlayer(playerID)
+		if player~=nil and cameraDummies[playerID] == nil then
+			local dummy = CreateUnitByName("camera_dummy", Vector(0,0,0), false, nil, nil, player:GetTeamNumber())
+			dummy:AddNewModifier(dummy, nil, "dummy_modifier", {})
+			cameraDummies[playerID] = dummy
+		end
 	end
 end
 
@@ -168,6 +180,62 @@ function Camera:Lock(playerID)
 	createDummyIfNotExisting(playerID)
 	PlayerResource:SetCameraTarget(playerID, cameraDummies[playerID])
 	currentTargets[playerID] = cameraDummies[playerID]
+end
+
+--[[
+locks all players to the global camera dummy
+
+if all players have the same camera angle using the global dummy has much better performance than using an individual dummy for each player
+]]
+function Camera:GlobalLock()
+	if globalCameraDummy == nil then
+		globalCameraDummy = CreateUnitByName("camera_dummy", Vector(0,0,0), false, nil, nil, 2)
+		globalCameraDummy:AddNewModifier(dummy, nil, "dummy_modifier", {})
+	end
+	
+	local playerIDs = Helper:GetAllPlayerIDs()
+	for _,playerID in pairs(playerIDs) do
+		PlayerResource:SetCameraTarget(playerID, globalCameraDummy)
+		currentTargets[playerID] = globalCameraDummy
+	end
+end
+
+function Camera:MoveGlobalTo(point, changeHeight, delay)
+	if delay == nil or delay < 0.03 then
+		globalCameraDummy:SetOrigin(point)
+		if changeHeight ~= nil and changeHeight == true then
+			Camera:UpdateSettings("global", nil, nil, point.z, nil)
+		end
+	else
+		local interval = 0.03
+		local intervalCount = delay/interval
+		local now = GameTime:SinceStart()
+		
+		local startPt = globalCameraDummy:GetOrigin()
+		local endPt = point
+		local diff = endPt - startPt
+		local direction = diff:Normalized()
+		local magnitude
+		
+		if changeHeight ~= nil and changeHeight == true then
+			magnitude = diff:Length()
+		else
+			magnitude = diff:Length2D()
+		end
+		
+		Task:IntervalLimited(
+			basicLinearInterpolation, 
+			interval, 
+			{ 
+				startPt = startPt, 
+				startTime = now,
+				totalTime = delay,
+				direction = direction,
+				magnitude = magnitude,
+				changeHeight = changeHeight
+			}, 
+			intervalCount)
+	end
 end
 
 
@@ -186,6 +254,7 @@ function Camera:MoveTo(playerID, point, changeHeight, delay)
 	createDummyIfNotExisting(playerID)
 	
 	if cameraDummies[playerID] ~= nil then
+		
 		if delay == nil or delay < 0.03 then
 			cameraDummies[playerID]:SetOrigin(point)
 			if changeHeight ~= nil and changeHeight == true then
@@ -213,7 +282,7 @@ function Camera:MoveTo(playerID, point, changeHeight, delay)
 				interval, 
 				{ 
 					playerID = playerID, 
-					startPt = cameraDummies[playerID]:GetOrigin(), 
+					startPt = startPt, 
 					startTime = now,
 					totalTime = delay,
 					direction = direction,
@@ -236,11 +305,19 @@ function basicLinearInterpolation(info)
 	end
 	
 	local curMagnitude = info.magnitude * percent
-	
 	local newPos = info.startPt + (info.direction * curMagnitude)
-	cameraDummies[info.playerID]:SetOrigin(newPos)
-	if info.changeHeight ~= nil and info.changeHeight == true then
-		Camera:UpdateSettings(info.playerID, nil, nil, newPos.z, nil)
+	
+	if playerID ~= nil then
+		cameraDummies[info.playerID]:SetOrigin(newPos)
+		if info.changeHeight ~= nil and info.changeHeight == true then
+			Camera:UpdateSettings(info.playerID, nil, nil, newPos.z, nil)
+		end
+		
+	elseif playerID == nil then
+		globalCameraDummy:SetOrigin(newPos)
+		if info.changeHeight ~= nil and info.changeHeight == true then
+			Camera:UpdateSettings("global", nil, nil, newPos.z, nil)
+		end
 	end
 end
 
@@ -270,3 +347,5 @@ end
 function Camera:ShakeLarge(center, radius, duration)
 	Camera:Shake(center, radius, 5000, 100, duration)
 end
+
+

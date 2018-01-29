@@ -62,7 +62,7 @@ function setCamera(settings)
 function UpdateSettings(table_name, key, data)
 {
 	var playerID = "" + Players.GetLocalPlayer()
-	if(key === playerID)
+	if(key === playerID || key === "global")
 	{
 		if(data.yaw !== undefined){
 			GameUI.SetCameraYaw(data.yaw)

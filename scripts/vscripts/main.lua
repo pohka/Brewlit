@@ -17,7 +17,7 @@ function Brewlit:Start()
 	Task:Interval(camTest, 0.03)
 	Camera:SetCameraTypeAllPlayers("third_person_alt")
 	
-	
+	--[[
 	Event:OnUnitSpawned(function(event)
 		if event.unit:IsHero() then
 			local playerID = event.unit:GetPlayerOwnerID()
@@ -26,6 +26,7 @@ function Brewlit:Start()
 			Camera:MoveTo(playerID, Vector(0,-600,0), false, 5)
 		end
 	end)
+	]]
 end
 
 
@@ -73,7 +74,7 @@ function Brewlit:Update()
 	end
 	
 	-- Camera:Shake(Vector(0,0,0), 3000, 150, 0.45, 1)
-	Camera:Shake(Vector(0,0,0), 3000, 50, 1, 1)
+	--Camera:Shake(Vector(0,0,0), 3000, 50, 1, 1)
 	
 	--[[
 	local playerIDs = Helper:GetAllPlayerIDs()
@@ -106,6 +107,13 @@ end
 
 --you can listen to particular state changes using listener functions called from GameStateManager
 function Event:OnStateInProgress()
+	Camera:GlobalLock()
+	Camera:MoveGlobalTo(Vector(1000,300,-400))
+	Camera:MoveGlobalTo(Vector(0, -600,0), true, 5)
+	--local targets = Camera:GetCurrentTargets()
+	--print("targets: --------------")
+	Helper:PrintTable(targets)
+	--Task:Delay(function() Camera:MoveTo(, Vector(0,-600,0), false, 5) end, 4)
 end
 
 function MinimapEventTest()
