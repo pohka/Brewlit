@@ -1,3 +1,65 @@
-""
+//settings for the lobby menu
+"AddonInfo"
 {
+	"TeamCount" "2"
+	"IsPlayable"  "1"
+	"MaxPlayers"  "10"
+	
+
+	//custom key binds
+	"Default_Keys"
+	{
+		//WASD keys for directional input
+		//this will overwrite the default actions for WASD. Also bare in mind that alot of people don't have a qwerty keyboard
+		//"01"
+		//{
+		//	"Key"       "W"
+		//	"Command"   "+UpKey"
+		//	"Name"      "up"
+		//}
+		//"02"
+		//{
+		//	"Key"       "S"
+		//	"Command"   "+DownKey"
+		//	"Name"      "down"
+		//}
+		//"03"
+		//{
+		//	"Key"       "A"
+		//	"Command"   "+LeftKey"
+		//	"Name"      "left"
+		//}
+		//"04"
+		//{
+		//	"Key"       "D"
+		//	"Command"   "+RightKey"
+		//	"Name"      "right"
+		//}
+		
+		//directional input with arrow keys
+		"05"
+		{
+			"Key"       "UPARROW"
+			"Command"   "+UpKey"
+			"Name"      "up"
+		}
+		"06"
+		{
+			"Key"       "DOWNARROW"
+			"Command"   "+DownKey"
+			"Name"      "down"
+		}
+		"07"
+		{
+			"Key"       "LEFTARROW"
+			"Command"   "+LeftKey"
+			"Name"      "left"
+		}
+		"08"
+		{
+			"Key"       "RIGHTARROW"
+			"Command"   "+RightKey"
+			"Name"      "right"
+		}
+	}
 }

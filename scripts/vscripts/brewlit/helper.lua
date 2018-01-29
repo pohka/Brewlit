@@ -54,7 +54,7 @@ function Helper:PrintTable(tbl)
 					vType = "table"
 				end
 			else
-				vType = type(v)
+				vType = type(v) .. " = " .. v
 			end
 			
 			print(k .. ": " .. vType)

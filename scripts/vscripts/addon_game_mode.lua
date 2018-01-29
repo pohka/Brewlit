@@ -25,6 +25,7 @@ require('brewlit/hud')
 require('brewlit/ability')
 require('brewlit/task')
 require('brewlit/camera')
+require('brewlit/input')
 
 _G.debugging = true
 
@@ -68,7 +69,20 @@ function BrewlitGameMode:InitGameMode()
 	--initalize task updating
 	local gameMode = GameRules:GetGameModeEntity()
 	gameMode:SetContextThink("Tasks", Task.update, 0.03)
+	
+	--listens to changes to input
+	CustomGameEventManager:RegisterListener("input", Input.Update)
 end
+
+--[[
+	input.playerid : playerid of this input
+	input.move_x : horizontal input (-1, 0 or 1) i.e A,D
+	input.move_y : vertical input (-1, 0 or 1) i.e. W,S
+	input.cursor_x : cursor horizonal position (value from -1 to 1 and 0 is center) 
+	input.cursor_y : cursor vertical position (value from -1 to 1 and zero is center) 
+	
+	To remove/change direction input keys change addoninfo.txt
+]]
 
 function clockTest()
 	print("testing")

@@ -27,8 +27,16 @@ function Brewlit:Start()
 		end
 	end)
 	]]
+	Input:ListenToDirectionalInput(true)
+	Input:ListenToCursorInput(false)
 end
 
+--[[
+function Brewlit:OnInput(input)
+	print("---------------------")
+	Helper:PrintTable(input)
+end
+]]
 
 local yaw = 0
 local zoom = 1000
@@ -112,7 +120,7 @@ function Event:OnStateInProgress()
 	Camera:MoveGlobalTo(Vector(0, -600,0), true, 5)
 	--local targets = Camera:GetCurrentTargets()
 	--print("targets: --------------")
-	Helper:PrintTable(targets)
+	--Helper:PrintTable(targets)
 	--Task:Delay(function() Camera:MoveTo(, Vector(0,-600,0), false, 5) end, 4)
 end
 

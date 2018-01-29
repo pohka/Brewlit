@@ -132,7 +132,7 @@ end
 --not the z-axis of the target is not the same as the camera height
 function Camera:GetCurrentTargets()
 	local tbl = {}
-	for playerID,target in pairs(currentTargets)
+	for playerID,target in pairs(currentTargets) do
 		tbl[playerID] = target:GetOrigin()
 	end
 	return tbl

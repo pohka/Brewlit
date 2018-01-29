@@ -5,6 +5,7 @@
         "game",
 		"debug",
 		"camera",
-		"camera_type"
+		"camera_type",
+		"input"
     ]
 }

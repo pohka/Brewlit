@@ -55,4 +55,3 @@ Future
 ------------
 * net_tables generation
 * precache generation
-* keybinds and mouse input
