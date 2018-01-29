@@ -23,7 +23,7 @@ function Brewlit:Start()
 			local playerID = event.unit:GetPlayerOwnerID()
 			Camera:Lock(playerID)
 			Camera:MoveTo(playerID, Vector(0, 300,-400))
-			Camera:MoveTo(playerID, Vector(0,-500,0), false, 5)
+			Camera:MoveTo(playerID, Vector(0,-600,0), false, 5)
 		end
 	end)
 end
@@ -71,6 +71,9 @@ function Brewlit:Update()
 	if Camera:AllPlayersHaveTarget() == false then
 		--Camera:LockAllCamerasToHero()
 	end
+	
+	-- Camera:Shake(Vector(0,0,0), 3000, 150, 0.45, 1)
+	Camera:Shake(Vector(0,0,0), 3000, 50, 1, 1)
 	
 	--[[
 	local playerIDs = Helper:GetAllPlayerIDs()

@@ -243,3 +243,30 @@ function basicLinearInterpolation(info)
 		Camera:UpdateSettings(info.playerID, nil, nil, newPos.z, nil)
 	end
 end
+
+--[[
+shakes the camera for all units in area of the circle
+if you are locking a camera to a unit like a dummy then the camera will only shake if the unit is in range, and not the hero
+
+amplitude is the power of the vibration
+frequency is the rate at which the vibrations occur, higher value is more vibrations
+duration is the length of the shaking
+]]
+function Camera:Shake(center, radius, duration, amplitude, frequency)
+	ScreenShake(center, amplitude, frequency, duration, radius, 0, true)
+end
+
+--small camera shake preset
+function Camera:ShakeSmall(center, radius, duration)
+	Camera:Shake(center, radius, 50, 1, duration)
+end
+
+--medium camera shake preset
+function Camera:ShakeMedium(center, radius, duration)
+	Camera:Shake(center, radius, 550, 5, duration)
+end
+
+--large camera shake preset
+function Camera:ShakeLarge(center, radius, duration)
+	Camera:Shake(center, radius, 5000, 100, duration)
+end

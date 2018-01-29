@@ -41,7 +41,6 @@
   * dummy positioning (forward follow, smooth forward follow)
   * lerp
   * global dummy
-  * camera shake
 * UI library
   * drop downs
   * checkboxes
