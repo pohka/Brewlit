@@ -12,13 +12,21 @@ function Brewlit:Start()
 	
 	local id = Task:Interval(test2, 1, nil)
 	Task:Delay(test, 5, {id})
-	Camera:FocusHeroOnRespawn()
+	--Camera:FocusHeroOnRespawn()
 	
 	Task:Interval(camTest, 0.03)
-	Camera:SetCameraTypeAllPlayers("right")
+	Camera:SetCameraTypeAllPlayers("third_person_alt")
+	
+	
+	Event:OnUnitSpawned(function(event)
+		if event.unit:IsHero() then
+			local playerID = event.unit:GetPlayerOwnerID()
+			Camera:Lock(playerID)
+			Camera:MoveTo(playerID, Vector(0, 300,-400))
+			Camera:MoveTo(playerID, Vector(0,-500,0), false, 5)
+		end
+	end)
 end
-
-
 
 
 local yaw = 0
@@ -52,19 +60,26 @@ function camTest()
 	
 	local playerIDs = Helper:GetAllPlayerIDs()
 	for _,playerID in pairs(playerIDs) do
-		Camera:UpdateSettings(playerID, yaw, 300, 300, pitch)
+		--Camera:UpdateSettings(playerID, yaw, 300, 300, pitch)
 	end
 end
 
-
+--local yPos = -100
 --called once every second
 function Brewlit:Update()
 	
 	if Camera:AllPlayersHaveTarget() == false then
-		Camera:LockAllCamerasToHero()
+		--Camera:LockAllCamerasToHero()
 	end
 	
-	
+	--[[
+	local playerIDs = Helper:GetAllPlayerIDs()
+	for _,playerID in pairs(playerIDs) do
+		--Camera:FocusPoint(playerID, Vector(0,0,0))
+		Camera:Lock(playerID)
+		Camera:MoveTo(playerID, Vector(0,yPos,0))
+	end
+	]]
 	
 	--local heroes = Query:GetTrees()
 	--Helper:PrintTable(heroes)
@@ -88,8 +103,6 @@ end
 
 --you can listen to particular state changes using listener functions called from GameStateManager
 function Event:OnStateInProgress()
-	print("game started")
-	HUD:SendChatMsg("hello World")
 end
 
 function MinimapEventTest()

@@ -6,12 +6,16 @@
 	* The camera dips lower the futher you move away from the spawn point
 ]]
 
+LinkLuaModifier("dummy_modifier", "ability/dummy_modifier.lua", LUA_MODIFIER_MOTION_NONE)
+
 if Camera == nil then
 	Camera = class ({})
 end
 
 --table of all the current camera targets
 currentTargets = {}
+
+cameraDummies = {}
 
 --locks the camera for each player to follow their hero
 function Camera:LockAllCamerasToHero()
@@ -126,4 +130,116 @@ end
 --if the target is nil then the camera is not following any entity
 function Camera:GetCurrentTargets()
 	return currentTargets
+end
+
+
+--sets the camera to focus a point
+function Camera:FocusPoint(playerID, point)
+	createDummyIfNotExisting(playerID)
+	local player = PlayerResource:GetPlayer(playerID)
+	
+	if player ~= nil and cameraDummies[playerID] ~= nil then
+		cameraDummies[playerID]:SetOrigin(point)
+		PlayerResource:SetCameraTarget(playerID, cameraDummies[playerID])
+		currentTargets[playerID] = cameraDummies[playerID]
+		
+		--delay unlock camera
+		Task:Delay(function(tbl) 
+			Camera:UnlockPlayerCamera(tbl.playerID)
+		end, 0.1, {playerID = playerID})
+	end
+end
+
+
+--creates camera dummy for player if it doesn't exist
+function createDummyIfNotExisting(playerID)
+	local player = PlayerResource:GetPlayer(playerID)
+	if player~=nil and cameraDummies[playerID] == nil then
+		local dummy = CreateUnitByName("camera_dummy", Vector(0,0,0), false, nil, nil, player:GetTeamNumber())
+		dummy:AddNewModifier(dummy, nil, "dummy_modifier", {})
+		cameraDummies[playerID] = dummy
+		print("created dummy")
+	end
+end
+
+
+--locks the camera onto the dummy unit for this player
+function Camera:Lock(playerID)
+	createDummyIfNotExisting(playerID)
+	PlayerResource:SetCameraTarget(playerID, cameraDummies[playerID])
+	currentTargets[playerID] = cameraDummies[playerID]
+end
+
+
+--[[
+moves the camera to point for this player
+
+the camera must be locked to the dummy for this function to work (use Camera:Lock())
+
+if change height is true then it will change the camera on the z-axis
+changeHeight with a delay will use up alot of resources and might have sharp movements
+as it requires use of nettables. It is recommended to set changeHeight to false or nil when using a delay
+
+if the delay is not nil then the camera will transition from one point to the next using linear interpolation
+]]
+function Camera:MoveTo(playerID, point, changeHeight, delay)
+	createDummyIfNotExisting(playerID)
+	
+	if cameraDummies[playerID] ~= nil then
+		if delay == nil or delay < 0.03 then
+			cameraDummies[playerID]:SetOrigin(point)
+			if changeHeight ~= nil and changeHeight == true then
+				Camera:UpdateSettings(playerID, nil, nil, point.z, nil)
+			end
+		else
+			local interval = 0.03
+			local intervalCount = delay/interval
+			local now = GameTime:SinceStart()
+			
+			local startPt = cameraDummies[playerID]:GetOrigin()
+			local endPt = point
+			local diff = endPt - startPt
+			local direction = diff:Normalized()
+			local magnitude
+			
+			if changeHeight ~= nil and changeHeight == true then
+				magnitude = diff:Length()
+			else
+				magnitude = diff:Length2D()
+			end
+			
+			Task:IntervalLimited(
+				basicLinearInterpolation, 
+				interval, 
+				{ 
+					playerID = playerID, 
+					startPt = cameraDummies[playerID]:GetOrigin(), 
+					startTime = now,
+					totalTime = delay,
+					direction = direction,
+					magnitude = magnitude,
+					changeHeight = changeHeight
+				}, 
+				intervalCount)
+		end
+	end
+end
+
+--moves camera dummy from starting starting point to new point with basic linear interpolation
+function basicLinearInterpolation(info)
+	local now = GameTime:SinceStart()
+	
+	--0-1 value of the current progression of the translation
+	local percent = (now - info.startTime) / info.totalTime 
+	if percent > 1 then 
+		percent = 1
+	end
+	
+	local curMagnitude = info.magnitude * percent
+	
+	local newPos = info.startPt + (info.direction * curMagnitude)
+	cameraDummies[info.playerID]:SetOrigin(newPos)
+	if info.changeHeight ~= nil and info.changeHeight == true then
+		Camera:UpdateSettings(info.playerID, nil, nil, newPos.z, nil)
+	end
 end

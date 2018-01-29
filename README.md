@@ -26,6 +26,7 @@
   * rounds
   * custom clock
 * Animations
+  * prioirty of animations
 * Ability
   * charges
   * tracking projectiles
@@ -37,9 +38,9 @@
   * events
   * queue commands (such as path finding)
 * Camera
-  * preset angles (forward follow)
-  * smoothing transitions
-  * camera dummies for changing angles
+  * dummy positioning (forward follow, smooth forward follow)
+  * lerp
+  * global dummy
   * camera shake
 * UI library
   * drop downs
