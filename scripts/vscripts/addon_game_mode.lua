@@ -32,6 +32,7 @@ require('brewlit/ability')
 require('brewlit/task')
 require('brewlit/camera')
 require('brewlit/input')
+require('brewlit/animation')
 
 _G.debugging = true
 

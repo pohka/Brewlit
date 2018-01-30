@@ -15,6 +15,10 @@ function proj_test:OnSpellStart()
 		speed = projectileSpeed, 
 		distance = 2000
 	})
+	
+	
+	Animation:Set(info.caster, ACT_DOTA_FLAIL, 3, 1)
+	Animation:Set(info.caster, ACT_DOTA_CAST_ABILITY_2, 0.5, 1, 2)
 
 	--[[
 	--split fire example

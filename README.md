@@ -8,6 +8,7 @@
   * API
   * option to start opened
   * fix bug with logging multiple msgs at once
+  * input commands
 * Find
   * units with modifier
 * Quest System
@@ -19,14 +20,12 @@
   * damage
   * projectile
   * execute order
-  * inventory
+  * inventory 
   * modifer gained
 * GameMode mangement
   * custom states
   * rounds
   * custom clock
-* Animations
-  * prioirty of animations
 * Ability
   * charges
   * tracking projectiles
@@ -38,9 +37,13 @@
   * events
   * queue commands (such as path finding)
 * Camera
+  * set yaw and pitch with delay
   * more camera presets
     * forward follow
 	* smooth forward follow
+	* Disable all players for cutscenes
+* Helper
+  * move GetAllPlayers and GetAllPlayerIDs to PlayerHelper
 * UI library
   * drop downs
   * checkboxes
@@ -52,4 +55,5 @@
   * help/info
 * Cosmetics
 * Physics
+
 
