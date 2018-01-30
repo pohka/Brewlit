@@ -6,15 +6,15 @@ function Brewlit:Start()
 	GameRules:SetRuneSpawnTime(10)
 	--SetPassiveGold(100, 3)
 	
-	Ability.sameAbilityMode = true
-	Ability.abilityList = {"proj_test"}
+	--Ability.sameAbilityMode = true
+	--Ability.abilityList = {"proj_test"}
 	
 	
-	local id = Task:Interval(test2, 1, nil)
-	Task:Delay(test, 5, {id})
+	--local id = Task:Interval(test2, 1, nil)
+	--Task:Delay(test, 5, {id})
 	--Camera:FocusHeroOnRespawn()
 	
-	Task:Interval(camTest, 0.03)
+	--Task:Interval(camTest, 0.03)
 	Camera:SetCameraTypeAllPlayers("third_person_alt")
 	
 	--[[
@@ -28,7 +28,7 @@ function Brewlit:Start()
 	end)
 	]]
 	Input:ListenToDirectionalInput(true)
-	Input:ListenToCursorInput(false)
+	Input:ListenToCursorRawInput(false)
 end
 
 --[[
@@ -78,7 +78,7 @@ end
 function Brewlit:Update()
 	
 	if Camera:AllPlayersHaveTarget() == false then
-		--Camera:LockAllCamerasToHero()
+		Camera:LockAllCamerasToHero()
 	end
 	
 	-- Camera:Shake(Vector(0,0,0), 3000, 150, 0.45, 1)
@@ -115,9 +115,9 @@ end
 
 --you can listen to particular state changes using listener functions called from GameStateManager
 function GameState:OnStateInProgress()
-	Camera:GlobalLock()
-	Camera:MoveGlobalTo(Vector(1000,300,-400))
-	Camera:MoveGlobalTo(Vector(0, -600,0), true, 5)
+	--Camera:GlobalLock()
+	--Camera:MoveGlobalTo(Vector(1000,300,-400))
+	--Camera:MoveGlobalTo(Vector(0, -600,0), true, 5)
 	--local targets = Camera:GetCurrentTargets()
 	--print("targets: --------------")
 	--Helper:PrintTable(targets)

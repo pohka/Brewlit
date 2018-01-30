@@ -1,3 +1,11 @@
+var currentCameraSettings =  {
+	pitch : 60,
+	yaw : 0,
+	height : 100,
+	distance : 1134
+}
+
+//camera angle presets
 var presets = {
 	front : {
 		pitch : 0.1,
@@ -49,6 +57,7 @@ var presets = {
 	},
 }
 
+//applies the setting for the camera for this player
 function setCamera(settings)
 {
 	GameUI.SetCameraPitchMin(settings.pitch)
@@ -56,6 +65,8 @@ function setCamera(settings)
 	GameUI.SetCameraYaw(settings.yaw)
 	GameUI.SetCameraLookAtPositionHeightOffset(settings.height)
 	GameUI.SetCameraDistance(settings.distance)
+	
+	currentCameraSettings = settings;
 }
 
 //update the setting for the camera
@@ -66,19 +77,23 @@ function UpdateSettings(table_name, key, data)
 	{
 		if(data.yaw !== undefined){
 			GameUI.SetCameraYaw(data.yaw)
+			currentCameraSettings.yaw = data.yaw;
 		}
 		
 		if(data.zoom !== undefined){
 			GameUI.SetCameraDistance(data.zoom)
+			currentCameraSettings.zoom = data.zoom;
 		}
 		
 		if(data.height !== undefined){
 			GameUI.SetCameraLookAtPositionHeightOffset(data.height)
+			currentCameraSettings.height = data.height;
 		}
 		
 		if(data.pitch !== undefined){
 			GameUI.SetCameraPitchMin(data.pitch)
 			GameUI.SetCameraPitchMax(data.pitch)
+			currentCameraSettings.pitch = data.pitch;
 		}
 	}
 }
@@ -104,7 +119,7 @@ function SetCameraType(table_name, key, data)
 		}
 		
 		if(preset !== undefined){
-			setCamera(settings)
+			setCamera(settings);
 		}
 	}
 }

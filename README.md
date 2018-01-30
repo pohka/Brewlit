@@ -41,7 +41,6 @@
   * more camera presets
     * forward follow
 	* smooth forward follow
-	* rotate with scroll wheel
 * UI library
   * drop downs
   * checkboxes

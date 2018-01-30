@@ -1,6 +1,6 @@
 //current state of the custom input
 var USE_DIRECTIONAL_INPUT = false;
-var USE_CURSOR_INPUT = false;
+var USE_CURSOR_RAW_POSITION = false;
 
 /*
 	stores values for input
@@ -53,11 +53,10 @@ function SendInput()
 		table["move_y"] = inputBuffer["up"] - inputBuffer["down"];
 	}
 	
-	
-	if(USE_CURSOR_INPUT){
+	if(USE_CURSOR_RAW_POSITION){
 		var pos = getMousePos();
-		table["cursor_x"] = pos.x;
-		table["cursor_y"] = pos.y;
+		table["cursor_raw_x"] = pos.x;
+		table["cursor_raw_y"] = pos.y;
 	}
 	
 	//only send updates to server if the input table has changed
@@ -85,7 +84,7 @@ function inputTableHasChanged(table)
 	return false;
 }
 
-//creates and event listener for each key command
+//creates a callback function for each custom keybind for directional input
 function registerDirectionalInputKeys()
 {
 	Game.AddCommand( "+UpKey", UpPressed, "", 0 );
@@ -104,15 +103,15 @@ function updateInputSettings(table, key, data)
 	if(key === "directional"){
 		USE_DIRECTIONAL_INPUT = data.enabled;
 	}
-	else if(key === "cursor"){
-		USE_CURSOR_INPUT = data.enabled;
+	else if(key == "cursor_raw"){
+		USE_CURSOR_RAW_POSITION = data.enabled
 	}
 }
 
 (function()
 {
 	registerDirectionalInputKeys();
-	
+
 	CustomNetTables.SubscribeNetTableListener("input", updateInputSettings);
 	
 	SendInput()
