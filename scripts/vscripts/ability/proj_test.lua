@@ -6,9 +6,17 @@ function proj_test:OnSpellStart()
 	
 	local projectileSpeed = 1000
 	local particle = "particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf"
+	local particleTrack = "particles/base_attacks/generic_projectile.vpcf"
 	
+	Ability:TrackingProjectileFire(self, {
+		target = info.target,
+		particle = particleTrack,
+		speed = 400,
+		lifeSpan = 10
+	});
 	
 	--single projectile example
+	--[[
 	Ability:ProjectileFire(self, {
 		particle = particle, 
 		direction = info.direction, 
@@ -19,7 +27,7 @@ function proj_test:OnSpellStart()
 	
 	Animation:Set(info.caster, ACT_DOTA_FLAIL, 3, 1)
 	Animation:Set(info.caster, ACT_DOTA_CAST_ABILITY_2, 0.5, 1, 2)
-
+	]]
 	--[[
 	--split fire example
 	local angle = 30

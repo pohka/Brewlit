@@ -66,14 +66,14 @@ function Ability:ProjectileClockFire(ability, numProjectiles, info)
 	return projectileID
 end
 
---creates and projectile and returns the projectile ID
+--creates and fires a linear projectile and returns the projectile ID
 function Ability:ProjectileFire(ability, info)
 	local pInfo = Ability:ConvertInfoToProjectileTable(ability, info)
 	return ProjectileManager:CreateLinearProjectile(pInfo)
 end
 
 --[[
-converts a brewlit projectile table to the standard Valve projectile tables
+converts a brewlit linear projectile table to the standard Valve linear projectile tables
 Table:
 	Required keys:
 		particle,		--particle effect (.vpcf)
@@ -305,4 +305,68 @@ function Ability:RefreshAll(unit, refreshAbilities, refreshInventory, refreshBac
 	end
 end
 
+--[[
+info table:
+	-target
+	-particle
+	-speed
+	-lifeSpan
 
+optional keys:
+	-drawOnMinimap
+	-dodgeable
+	-isAttack
+	-visisbleToEnemies
+	-replaceExisting
+	-givesVision
+	-visionRadius
+	-visionTeamNum
+]]
+function Ability:TrackingProjectileFire(ability, info)
+	local caster = ability:GetCaster()
+	
+	local pInfo = 
+	{
+		Target = info.target,
+		Source = caster,
+		Ability = ability,	
+		EffectName = info.particle,
+		iMoveSpeed = info.speed,
+		flExpireTime = GameRules:GetGameTime() + info.lifeSpan,
+		vSourceLoc= caster:GetAbsOrigin()
+	}
+	
+	if info.drawOnMinimap ~= nil then
+		pInfo.bDrawsOnMinimap = info.drawOnMinimap
+	end
+	
+	if info.dodgeable ~= nil then
+		pInfo.bDodgeable = info.dodgeable 
+	end
+	
+	if info.isAttack ~= nil then
+		pInfo.bIsAttack = info.isAttack
+	end
+	
+	if info.visisbleToEnemies ~= nil then
+		pInfo.bVisibleToEnemies = info.visisbleToEnemies
+	end
+	
+	if info.replaceExisting ~= nil then
+		pInfo.bReplaceExisting = info.replaceExisting
+	end
+	
+	if info.givesVision ~= nil then
+		pInfo.bProvidesVision = info.givesVision
+	end
+	
+	if info.visionRadius ~= nil then
+		pInfo.iVisionRadius = info.visionRadius
+	end
+	
+	if info.visionTeamNum ~= nil then
+		pInfo.iVisionTeamNumber = info.visionTeamNum
+	end
+	
+	return ProjectileManager:CreateTrackingProjectile(pInfo)
+end

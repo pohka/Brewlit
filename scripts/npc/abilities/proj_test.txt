@@ -5,11 +5,14 @@
 		"BaseClass"				 "ability_lua"
 		"ScriptFile"			 "ability/proj_test"
 		
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"Level"                  "1"
 		"MaxLevel"               "1"
 		"precache" {
-				"particle" ""particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf""
+				"particle" "particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf"
+				"particle" "particles/base_attacks/generic_projectile.vpcf"
 		}
 	}
 }
