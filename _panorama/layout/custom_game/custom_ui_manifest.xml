@@ -10,5 +10,6 @@
 
 	<Panel>
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/debugger.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/menu_quest.xml" />
 	</Panel>
 </root>

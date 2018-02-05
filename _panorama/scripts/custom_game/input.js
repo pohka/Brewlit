@@ -60,7 +60,7 @@ function SendInput()
 	}
 	
 	//only send updates to server if the input table has changed
-	if((USE_DIRECTIONAL_INPUT || USE_CURSOR_INPUT) && inputTableHasChanged(table)){
+	if((USE_DIRECTIONAL_INPUT || USE_CURSOR_RAW_POSITION) && inputTableHasChanged(table)){
 		GameEvents.SendCustomGameEventToServer("input", table);
 		lastTableSent = table
 	}

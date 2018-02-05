@@ -1,0 +1,142 @@
+
+.menu-tab
+{
+	margin-top: 120px;
+	horizontal-align: middle;
+	background-color: #333;
+	height: 70%;
+	width: 70%;
+	brightness: 1.5;
+}
+
+.menu-tab Label
+{
+	color: #fff;
+}
+
+.quest-col
+{
+	width: 40%;
+	height: 100%;
+	border-right: 2px solid #777;
+	padding-top: 15px;
+}
+
+.quest-info
+{
+	margin-left: 40%;
+	width: 100%;
+	height: 100%;
+	padding-top: 15px 24px;
+}
+
+.col-title
+{
+	font-size: 30px;
+	padding: 0px 24px;
+	border-bottom: 2px solid #777;
+	padding-right: 50px;
+}
+
+.quest-list
+{
+	margin-top: 50px;
+	flow-children: down;
+	height: 100%;
+	width: 100%;
+	background-color: #444;
+	overflow: squish scroll; 
+}
+
+.quest-list Label
+{
+	font-size: 24px;
+	padding: 8px 24px;
+}
+
+.quest
+{	
+	width: 100%;
+}
+
+.quest:hover
+{
+	background-color: #999;
+	color: #000;
+}
+
+.quest-section
+{
+	border-bottom: 1px solid #777;
+	margin-bottom: 10px;
+	margin-top: 20px;
+	width: 50%;
+}
+
+.quest-info-con
+{
+	
+	width: 100%;
+	height: 100%;
+	margin-top: 50px;
+	flow-children: down;
+	background-color: #444;
+}
+
+.quest-info-title
+{
+	width: 80%;
+	horizontal-align: center;
+	padding: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #777;
+}
+
+#quest-info-title-text
+{
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	font-size: 30px;
+}
+
+.quest-info-desc
+{
+	width: 80%;
+	horizontal-align: center;
+	padding: 20px;
+	min-height: 150px;
+}
+
+#quest-info-desc-text
+{
+	width: 100%;
+	font-size: 24px;
+}
+
+.quest-info-stages
+{
+	border-top: 2px solid #777;
+	width: 100%;
+	padding: 20px 30px;
+	flow-children: down;
+	overflow: squish scroll; 
+}
+
+.quest-stage-section
+{
+	padding-right: 150px;
+	padding-left: 10px;
+	font-size: 24px;
+	border-bottom: 1px solid #777;
+	margin-top: 10px;
+}
+
+.quest-stage
+{
+	width: 100%;
+	font-size: 24px;
+	padding: 8px 20px;
+}
+

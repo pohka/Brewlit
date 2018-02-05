@@ -1,0 +1,40 @@
+<root>
+  <styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/menu.css" />
+  </styles>
+  <scripts>
+		<include src="file://{resources}/scripts/custom_game/menu_quest.js" />
+  </scripts>
+	
+	<Panel class="menu-tab">
+		<Panel class="quest-col">
+			<Label class="col-title" text="Quests"/>
+			<Panel class="quest-list" id="quest-con">
+				<Label class="quest-section" text="Active"/>
+				<Label class="quest" text="&#9671; Quest 1"/>
+				<Label class="quest" text="&#9671; Quest 2"/>
+				<Label class="quest-section" text="Completed"/>
+				<Label class="quest" text="&#9670; Quest 3"/>
+			</Panel>
+		</Panel>
+		<Panel class="quest-info">
+			<Label class="col-title" text="Info"/>
+			<Panel class="quest-info-con">
+				<Panel class="quest-info-title">
+					<Label id="quest-info-title-text" text="title"/>
+				</Panel>
+				<Panel class="quest-info-desc">
+					<Label id="quest-info-desc-text" text="description"/>
+				</Panel>
+				<Panel class="quest-info-stages" id="quest-stage-con">
+					<Label class="quest-stage-section" text="Active"/>
+					<Label class="quest-stage" text="objective text"/>
+					<Label class="quest-stage-section" text="Completed"/>
+					<Label class="quest-stage" text="objective text"/>
+					
+				</Panel>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

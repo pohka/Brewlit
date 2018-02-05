@@ -26,9 +26,12 @@ function Brewlit:Start()
 			Camera:MoveTo(playerID, Vector(0,-600,0), false, 5)
 		end
 	end)
-	]]
+	
 	Input:ListenToDirectionalInput(true)
 	Input:ListenToCursorRawInput(false)
+	]]
+	
+	QuestManager:Load();
 end
 
 --[[
