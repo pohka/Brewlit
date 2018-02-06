@@ -1,0 +1,24 @@
+.notification-con
+{
+	margin-top:80px;
+	margin-top:80px;
+	brightness: 1.5;
+	flow-children: down;
+}
+
+.notification-con Panel
+{
+	background-color: rgba(0,0,0,0.5);
+	width: 450px;
+	padding: 10px;
+	padding-bottom: 14px;
+}
+.notification-con  Panel Label
+{
+	font-size: 30px;
+	color: #fff;
+	width: 100%;
+	padding-left: 30px;
+	line-height: 42px;
+	font-size: 24px;
+}

@@ -85,8 +85,9 @@ function Brewlit:Update()
 		Camera:LockAllCamerasToHero()
 	end
 	
-	if not Quests:IsQuestStarted("linear_quest") then
+	if not Quests:IsQuestStarted("linear_quest")then
 		Quests:StartQuest("linear_quest")
+		Task:Delay(function() Quests:SetStageActive("linear_quest", 20) end, 3)
 	end
 	-- Camera:Shake(Vector(0,0,0), 3000, 150, 0.45, 1)
 	--Camera:Shake(Vector(0,0,0), 3000, 50, 1, 1)

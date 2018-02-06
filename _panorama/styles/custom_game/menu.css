@@ -1,6 +1,35 @@
+.quest-menu
+{
+	width: 100%;
+	height: 100%;
+}
+
+.side-btn
+{
+	margin-top: 0px;
+	margin-left: 200px;
+	width: 50px;
+	height: 50px;
+	background-color: #000;
+}
+
+.side-btn Button, .side-btn Label
+{
+	width: 100%;
+	text-align: center;
+	font-size: 30px;
+	color: #fff;
+	line-height: 42px;
+}
+
+.side-btn Button:hover
+{
+	background-color: #f00;
+}
 
 .menu-tab
 {
+	visibility : collapse;
 	margin-top: 120px;
 	horizontal-align: middle;
 	background-color: #333;

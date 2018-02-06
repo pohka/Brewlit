@@ -109,11 +109,24 @@ function stageListSection(title, icon, stageList, useActiveList)
 	}
 }
 
+//callback function, called when the quest nettable changes
 function onQuestChange(table, key, data)
 {
 	if(key === "questList"){
 		quests = data;
 		updateQuestList();
+	}
+}
+
+//toggles the menu on and off
+function toggleQuestMenu()
+{
+	var menu = $("#menu_quest");
+	if(menu.visible){
+		menu.style.visibility = "collapse";
+	}
+	else{
+		menu.style.visibility = "visible";
 	}
 }
 

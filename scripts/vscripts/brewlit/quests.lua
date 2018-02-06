@@ -62,6 +62,7 @@ end
 
 --sets the current stage index of a quest
 function Quests:SetStageActive(questID, stageIndex)
+	stageIndex = ""..stageIndex
 	questList[questID].curStage = stageIndex
 	local stage = questList[questID]["stages"][stageIndex]
 	if stage ~= nil and stage.state == QUEST_STAGE_STATE_NOT_ACTIVE then
