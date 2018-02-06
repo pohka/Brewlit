@@ -30,6 +30,25 @@
 * Find
   * units with modifier
 * Quest System
+  * Quest Notifications
+    * new quest
+	* new objective
+  * Triggers
+    * kill unit
+	* fetch item
+	* enter area
+	* dialogue
+  * Rewards
+    * items
+	* expierence
+	* gold
+  * use cases:
+    * linear
+	* linear optional
+	* split and join
+	* skip
+	* spawn new quest
+	* and/or gate
 * Simplify filters 
   * xp
   * gold

@@ -33,7 +33,7 @@ require('brewlit/task')
 require('brewlit/camera')
 require('brewlit/input')
 require('brewlit/animation')
-require('brewlit/quest_manager')
+require('brewlit/quests')
 
 _G.debugging = true
 

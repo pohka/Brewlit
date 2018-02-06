@@ -31,7 +31,8 @@ function Brewlit:Start()
 	Input:ListenToCursorRawInput(false)
 	]]
 	
-	QuestManager:Load();
+	Quests:Load()
+	
 end
 
 --[[
@@ -84,6 +85,9 @@ function Brewlit:Update()
 		Camera:LockAllCamerasToHero()
 	end
 	
+	if not Quests:IsQuestStarted("linear_quest") then
+		Quests:StartQuest("linear_quest")
+	end
 	-- Camera:Shake(Vector(0,0,0), 3000, 150, 0.45, 1)
 	--Camera:Shake(Vector(0,0,0), 3000, 50, 1, 1)
 	

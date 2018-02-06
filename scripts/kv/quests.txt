@@ -1,6 +1,6 @@
 "quests"
 {
-	"zone1_quest1" //unique key
+	"linear_quest" //unique key
 	{
 		"title"			"my quest name"
 		"description"	"the description of this quest"
@@ -15,7 +15,6 @@
 			"20"
 			{
 				"text"		"find the building"
-				"optional"	"0"
 			}
 			"30"
 			{
